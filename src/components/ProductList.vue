@@ -6,6 +6,7 @@
         <thead class="bg-light">
           <tr>
             <th width="100">分類</th>
+            <th width="200">商品圖</th>  
             <th width="30%">商品名稱</th>
             <th width="100">原價</th>
             <th width="100">售價</th>  
@@ -16,6 +17,7 @@
         <tbody>
           <tr v-for="item in products" :key="item.id">
             <td>{{item.category}}</td>
+            <td><img :src="item.image" class="img-fluid" alt=""></td>
             <td>{{item.title}}</td>
             <td class="text-right">{{item.origin_price}}</td>
             <td class="text-right">{{item.price}}</td>
@@ -32,6 +34,8 @@
           </tr>
         </tbody>
       </table>
+
+      <pagination :pagination="pagination" @page-switch="getProducts"></pagination>  
       
       <!-- 商品彈窗 -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -46,6 +50,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form action="" @submit.prevent="updateProduct">
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-4">
@@ -65,15 +70,15 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="">商品名稱</label>
-                        <input type="text" class="form-control" v-model="tempProduct.title">
+                        <input type="text" class="form-control" v-model="tempProduct.title" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="">商品分類</label>
-                        <select class="form-control" v-model="tempProduct.category">
+                        <select class="form-control" v-model="tempProduct.category" required>
                           <option value="動作">動作</option>
-                          <option value="FPS">FPS</option>
+                          <option value="射擊">射擊</option>
                           <option value="解謎">解謎</option>
                           <option value="RPG">RPG</option>
                           <option value="策略">策略</option>
@@ -90,7 +95,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" min="0" class="form-control" v-model="tempProduct.origin_price">
+                        <input type="number" min="0" class="form-control" v-model="tempProduct.origin_price" required>
 
                       </div>
                     </div>
@@ -100,7 +105,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" min="0" class="form-control" v-model="tempProduct.price">
+                        <input type="number" min="0" class="form-control" v-model="tempProduct.price" required>
                       </div>                  
                     </div>            
                   </div>
@@ -113,8 +118,10 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">取消返回</button>
-              <button type="button" class="btn btn-primary" @click="updateProduct">儲存變更</button>
-            </div>
+              <button type="submit" class="btn btn-primary">儲存變更</button>
+            </div>              
+            </form>
+
           </div>
         </div>
       </div>
@@ -123,6 +130,7 @@
 
 <script>
 import $ from "jquery";
+import Pagination from '@/components/pagination.vue';
 
 export default {
   data() {
@@ -134,14 +142,16 @@ export default {
       isLoading: false
     }
   },
+  components:{Pagination},
   methods: {
-    getProducts(){
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/products`
+    getProducts(page = this.pagination.current_page){
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/products?page=${page}`;
       let vm = this;
       this.isLoading = true;
       this.$http.get(api)
       .then((res)=>{
-        vm.products = res.data.products
+        vm.products = res.data.products;
+        vm.pagination = res.data.pagination;
         vm.isLoading = false;
       })
     },

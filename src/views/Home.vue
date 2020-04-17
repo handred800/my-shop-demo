@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <sidebar></sidebar> 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-4">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 p-4">
           <router-view></router-view>
         </main>
 
