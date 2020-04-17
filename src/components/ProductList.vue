@@ -7,9 +7,9 @@
           <tr>
             <th width="100">分類</th>
             <th width="200">商品圖</th>  
-            <th width="30%">商品名稱</th>
-            <th width="100">原價</th>
-            <th width="100">售價</th>  
+            <th width="25%">商品名稱</th>
+            <th width="80">原價</th>
+            <th width="80">售價</th>  
             <th width="100">狀態</th>
             <th></th>                      
           </tr>
@@ -19,8 +19,8 @@
             <td>{{item.category}}</td>
             <td><img :src="item.image" class="img-fluid" alt=""></td>
             <td>{{item.title}}</td>
-            <td class="text-right">{{item.origin_price}}</td>
-            <td class="text-right">{{item.price}}</td>
+            <td class="text-right">{{item.origin_price | moneyFilter}}</td>
+            <td class="text-right">{{item.price | moneyFilter}}</td>
             <td>
               <span v-if="item.is_enabled === 1" class="text-primary">上架中</span>
               <span v-else class="text-danger">下架中</span>
@@ -150,6 +150,7 @@ export default {
       this.isLoading = true;
       this.$http.get(api)
       .then((res)=>{
+        console.log(res)
         vm.products = res.data.products;
         vm.pagination = res.data.pagination;
         vm.isLoading = false;
@@ -216,9 +217,6 @@ export default {
         }
       })
     }
-  },
-  filters:{
-
   },
   created() {
     this.getProducts()

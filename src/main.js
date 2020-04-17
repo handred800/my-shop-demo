@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import bootstrap from 'bootstrap';
+import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 
 axios.defaults.withCredentials = true;
@@ -12,10 +12,12 @@ Vue.use(VueAxios, axios)
 import App from './App.vue'
 import router from './router'
 import './eventBus'
+import moneyFilter from './money_format'
 
 Vue.config.productionTip = false;
 
 Vue.component('Loading',Loading);
+Vue.filter('moneyFilter', moneyFilter)
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 new Vue({
