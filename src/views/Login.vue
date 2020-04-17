@@ -38,7 +38,7 @@ export default {
       .then((res)=>{
         console.log(res)
         if(res.data.success){
-          vm.$router.push('/')
+          vm.$router.push('/admin')
         }
       })
     }

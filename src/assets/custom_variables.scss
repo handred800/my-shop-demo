@@ -250,7 +250,7 @@ $embed-responsive-aspect-ratios: join(((21 9),
 // Font, line-height, and color for body text, headings, and more.
 
 @font-face {
-  font-family: 'huninn';
+  font-family: '粉圓體';
   src: url('./font/jf-openhuninn-1.0.ttf')format('truetype');
 }
 
@@ -264,8 +264,7 @@ Arial,
 "Noto Sans",
 sans-serif,
 "Noto Color Emoji" !default;
-$font-family-monospace: 
-'huninn',
+$font-family-monospace: '粉圓體',
 SFMono-Regular,
 Menlo,
 Monaco,

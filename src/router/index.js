@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-
+import ProductList from '../components/productList.vue'
 
 Vue.use(VueRouter)
 
@@ -12,10 +12,17 @@ Vue.use(VueRouter)
     redirect: 'login'
   },
   {
-    path: '/',
+    path: '/admin',
     name: 'Home',
     component: Home,
-    meta:{requiresAuth: true},
+    children:[
+      {
+        path: 'productList',
+        name: 'ProductList',
+        component: ProductList,
+        meta: { requiresAuth: true },
+      }      
+    ]
   },
   {
     path: '/login',
