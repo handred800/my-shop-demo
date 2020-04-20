@@ -18,12 +18,12 @@
               </h4>
               <div class="btn-group w-100">
                 <button class="btn btn-sm btn-outline-primary" @click="openModal(item.id)">看更多</button>
-                <button type="button" class="btn btn-sm btn-primary">加入購物車</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="addToCart(item.id)">加入購物車</button>
               </div>
             </div>
           </div>
         </div>
-      </div>   
+      </div>
 
       <!-- 商品彈窗 -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,19 +35,20 @@
                           <span aria-hidden="true">&times;</span>
                       </button>
                   </div>
-                  <form action="" @submit.prevent="addCart">
+                  <form action="" @submit.prevent="addToCart(product.id,product.qty)">
                       <div class="modal-body">
                           <h4 class="font-weight-bold">{{product.title}} <span class="badge badge-warning">{{product.category}}</span></h4>
                           <img :src="product.image" class="w-100 mb-4" alt="">
                           <p>{{product.description}}</p>
                       </div>
                       <div class="modal-footer">
+                        <div class="d-flex flex-column flex-md-row align-items-end">
                           <div class="form-inline">
                             <div class="form-group">
                               <strong v-if="product.price != 0" class="text-danger">{{product.price | moneyFilter}} </strong>
                               <strong v-else>{{product.origin_price | moneyFilter}} </strong>
                               <div class="mx-3">X</div>
-                              <input type="number" min="0" max="10" class="form-control" v-model="product.qty">
+                              <input type="number" min="1" max="10" class="form-control" v-model="product.qty">
                               <div class="mx-3">
                                 = 
                                 <strong v-if="product.price != 0" class="text-danger">{{product.price*product.qty | moneyFilter}} <small>TWD</small></strong>
@@ -56,12 +57,29 @@
                             </div>
                           </div>                        
                           <button type="submit" class="btn btn-primary">加入購物車</button>
+                        </div>
                       </div>
                   </form>
               </div>
           </div>
       </div>
-      <pagination :pagination="pagination" @page-switch="getProducts"></pagination>  
+      <pagination :pagination="pagination" @page-switch="getProducts"></pagination>
+
+      <h4>購物車</h4>
+      <ul class="list-unstyled list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in cartData.carts" :key="item.id">
+          <div>
+            <h5 class="mb-0">{{item.product.title}}</h5>
+            <small class="text-muted">{{item.product.price}}<sup>TWD</sup> X {{item.qty}}</small>  
+          </div>
+          <div>
+            <strong class="mr-3">{{item.final_total}}</strong>
+            <button class="btn btn-danger" @click="delFormCart(item.id)">刪除</button>
+          </div>
+        </li>
+      </ul>
+      <hr>
+      <div class="text-right">總計 </div>
     </div>
 </template>
 
@@ -75,6 +93,7 @@ export default {
       product: {},
       pagination: {},
       products: [],
+      cartData: {},
       isLoading: false
     }
   },
@@ -96,18 +115,60 @@ export default {
       let vm = this;
       this.$http.get(api)
       .then((res)=>{
-        vm.product = Object.assign({qty: 0},res.data.product);
+        vm.product = Object.assign({qty: 1},res.data.product);
         $('#productModal').modal('show');
       })
     },
+    addToCart(id,qty=1){
+      let cart = {
+        'product_id':id,
+        qty
+      }
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
+      let vm = this;
+      this.$http.post(api,{data:cart})
+      .then((res)=>{
+        if(res.data.success){
+          $('#productModal').modal('hide');
+          vm.$bus.$emit('message:push',res.data.message,'success');
+        }else{
+          vm.$bus.$emit('message:push',res.data.message,'danger');
+        }
+        vm.getCart();
+      })
+      
+    },
+    delFormCart(id){
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart/${id}`;
+      let vm = this;
+      this.$http.delete(api)
+      .then((res)=>{
+        console.log(res);
+        vm.$bus.$emit('message:push',res.data.message,'success');
+        vm.getCart();
+      })
+    },
+    getCart(){
+      this.isLoading = true;
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
+      let vm = this;
+      this.$http.get(api)
+      .then((res)=>{
+        console.log(res.data);
+        vm.cartData = res.data.data;
+        vm.isLoading = false; 
+
+      })
+    }
   },
   filters:{
     textSummary(text){
-      return text.substring(0,60) + '...'
+      return text.substring(0,60) + '...';
     }
   },
   created() {
-    this.getProducts(1)
+    this.getProducts(1);
+    this.getCart();
   },
 }
 </script>
