@@ -11,7 +11,7 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li> -->
         </ul>
-        <button class="btn btn-primary" @click="logout">登出</button>
+        <button class="btn btn-outline-secondary" @click="logout">登出</button>
       </div>
     </nav>
 </template>
@@ -37,7 +37,10 @@ export default {
 
 <style lang="scss" scoped>
   .navbar{
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 999;
   }
 </style>

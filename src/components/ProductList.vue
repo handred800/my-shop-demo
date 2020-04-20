@@ -1,6 +1,6 @@
 <template>
     <div>
-        <loading :active.sync="isLoading"></loading>      
+      <loading :active.sync="isLoading"></loading>      
       <button class="btn btn-primary" @click="openModal(true)">新增商品</button>
       <table class="table mt-3">
         <thead class="bg-light">
@@ -8,8 +8,8 @@
             <th width="100">分類</th>
             <th width="200">商品圖</th>  
             <th width="25%">商品名稱</th>
-            <th width="80">原價</th>
-            <th width="80">售價</th>  
+            <th width="65">原價</th>
+            <th width="65">售價</th>  
             <th width="100">狀態</th>
             <th></th>                      
           </tr>
@@ -22,7 +22,7 @@
             <td class="text-right">{{item.origin_price | moneyFilter}}</td>
             <td class="text-right">{{item.price | moneyFilter}}</td>
             <td>
-              <span v-if="item.is_enabled === 1" class="text-primary">上架中</span>
+              <span v-if="item.is_enabled" class="text-primary">上架中</span>
               <span v-else class="text-danger">下架中</span>
             </td>
             <td class="text-center">
@@ -105,7 +105,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" min="0" class="form-control" v-model="tempProduct.price" required>
+                        <input type="number" class="form-control" v-model="tempProduct.price">
                       </div>                  
                     </div>            
                   </div>
@@ -113,6 +113,9 @@
                     <label for="">商品描述</label>
                     <textarea class="form-control" name="" id="" cols="30" rows="6" v-model="tempProduct.description"></textarea>
                   </div>
+                  <label for="is_enabled">
+                    <input id="is_enabled" type="checkbox" v-model="tempProduct.is_enabled">上架此商品
+                  </label>
                 </div>
               </div>
             </div>
@@ -150,7 +153,6 @@ export default {
       this.isLoading = true;
       this.$http.get(api)
       .then((res)=>{
-        console.log(res)
         vm.products = res.data.products;
         vm.pagination = res.data.pagination;
         vm.isLoading = false;
@@ -219,7 +221,7 @@ export default {
     }
   },
   created() {
-    this.getProducts()
+    this.getProducts(1)
   },
 }
 </script>

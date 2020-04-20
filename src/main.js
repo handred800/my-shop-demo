@@ -3,6 +3,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'bootstrap';
 import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 axios.defaults.withCredentials = true;
 
@@ -18,15 +19,17 @@ Vue.config.productionTip = false;
 
 Vue.component('Loading',Loading);
 Vue.filter('moneyFilter', moneyFilter)
-import 'vue-loading-overlay/dist/vue-loading.css';
+
+
 
 new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
 
+
+// 路由守衛
 router.beforeEach((to,from,next)=>{
-  // console.log(to,from,next);
   if(to.meta.requiresAuth){
     // 此頁面需登入驗證
     const api = `${process.env.VUE_APP_API}/api/user/check`;

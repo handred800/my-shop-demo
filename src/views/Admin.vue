@@ -1,11 +1,11 @@
 <template>
   <div>
     <navbar></navbar>
-    <alert></alert>
+
     <div class="container-fluid">
       <div class="row">
         <sidebar></sidebar> 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 p-4">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
           <router-view></router-view>
         </main>
 
@@ -19,7 +19,7 @@
 import ProductList from '@/components/productList.vue'
 import Navbar from '@/components/navbar.vue'
 import Sidebar from '@/components/sidebar.vue'
-import Alert from '@/components/alert.vue'
+
 
 export default {
   name: 'Home',
@@ -29,7 +29,13 @@ export default {
     }
   },
   components: {
-    ProductList,Navbar,Sidebar,Alert
+    ProductList,Navbar,Sidebar
   },
 }
 </script>
+
+<style lang="scss" scoped>
+  main{
+    padding: 80px 20px 20px;
+  }
+</style>

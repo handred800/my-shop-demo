@@ -39,6 +39,9 @@ export default {
         console.log(res)
         if(res.data.success){
           vm.$router.push('/admin')
+          vm.$bus.$emit('message:push',res.data.message,'success');
+        }else{
+          vm.$bus.$emit('message:push',res.data.message,'danger');
         }
       })
     }
