@@ -4,11 +4,16 @@ import VueAxios from 'vue-axios'
 import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VeeValidate from 'vee-validate';
+import zhTwValid from 'vee-validate/dist/locale/zh_TW'
 
 axios.defaults.withCredentials = true;
 
 Vue.use(VueAxios, axios)
-
+Vue.use(VeeValidate,{
+  events: 'change|blur'
+});
+VeeValidate.Validator.localize('zh_TW', zhTwValid);
 
 import App from './App.vue'
 import router from './router'

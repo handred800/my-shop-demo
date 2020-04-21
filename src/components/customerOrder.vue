@@ -2,7 +2,7 @@
     <div>
       <loading :active.sync="isLoading"></loading>
       <div class="form-row">
-        <div class="col-md-4 mb-4" v-for="item in products" :key="item.id">
+        <div class="col-sm-6 col-lg-4 mb-3" v-for="item in products" :key="item.id">
           <div class="card shadow-sm">
             <div class="card-img-wrapper" :style="`backgroundImage:url(${item.image})`">
               <span class="badge badge-warning card-img-tag">{{item.category}}</span>
@@ -27,7 +27,7 @@
 
       <!-- 商品彈窗 -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                   <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">商品詳情</h5>
@@ -42,21 +42,17 @@
                           <p>{{product.description}}</p>
                       </div>
                       <div class="modal-footer">
-                        <div class="d-flex flex-column flex-md-row align-items-end">
-                          <div class="form-inline">
-                            <div class="form-group">
-                              <strong v-if="product.price != 0" class="text-danger">{{product.price | moneyFilter}} </strong>
-                              <strong v-else>{{product.origin_price | moneyFilter}} </strong>
-                              <div class="mx-3">X</div>
-                              <input type="number" min="1" max="10" class="form-control" v-model="product.qty">
-                              <div class="mx-3">
-                                = 
-                                <strong v-if="product.price != 0" class="text-danger">{{product.price*product.qty | moneyFilter}} <small>TWD</small></strong>
-                                <strong v-else>{{product.origin_price*product.qty | moneyFilter}} <small>TWD</small></strong>                              
-                              </div>
-                            </div>
-                          </div>                        
-                          <button type="submit" class="btn btn-primary">加入購物車</button>
+                        <div class="d-flex flex-column flex-sm-row align-items-end">
+                          <div class="d-flex align-items-center">
+                            <strong v-if="product.price != 0" class="text-danger">{{product.price | moneyFilter}} </strong>
+                            <strong v-else>{{product.origin_price | moneyFilter}} </strong>
+                            <div class="mx-3">X</div>
+                            <input type="number" min="1" max="10" class="form-control" v-model="product.qty">
+                            <div class="mx-3">=</div>
+                            <strong v-if="product.price != 0" class="text-danger d-flex">{{product.price*product.qty | moneyFilter}} <small>TWD</small></strong>
+                            <strong v-else>{{product.origin_price*product.qty | moneyFilter}} <small>TWD</small></strong>                               
+                          </div>
+                          <button type="submit" class="btn btn-primary ml-3 mt-3 mt-sm-0">加入購物車</button>
                         </div>
                       </div>
                   </form>
@@ -65,21 +61,76 @@
       </div>
       <pagination :pagination="pagination" @page-switch="getProducts"></pagination>
 
-      <h4>購物車</h4>
-      <ul class="list-unstyled list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in cartData.carts" :key="item.id">
-          <div>
-            <h5 class="mb-0">{{item.product.title}}</h5>
-            <small class="text-muted">{{item.product.price}}<sup>TWD</sup> X {{item.qty}}</small>  
+
+      <!-- 訂單區塊 -->
+      <div v-if="cartData.carts.length > 0" class="form-row mt-5">
+        <!-- 資料表單 -->
+        <div class="col-md-7">
+          <h4>訂單資訊</h4>
+          <div class="card">
+            <form class="card-body" action="" @submit.prevent="createOrder">
+              <div class="form-group">
+                <label for="">收件人姓名</label>
+                <input type="text" class="form-control" :class="{'is-invalid': errors.has('name')}" name="name" v-model="form.user.name" v-validate="'required'">
+                <small class="invalid-feedback">請填寫姓名</small>
+              </div>
+              <div class="form-group">
+                <label for="">Email</label>
+                <input type="mail" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="form.user.email" name="email" v-validate="'required|email'">
+                <small class="invalid-feedback">{{errors.first('email')}}</small>
+              </div>
+              <div class="form-group">
+                <label for="">連絡電話</label>
+                <input type="text" class="form-control" :class="{'is-invalid': errors.has('phone')}" name="phone" v-model="form.user.tel" v-validate="'required'">
+                <small class="invalid-feedback">請填寫連絡電話</small>
+              </div>
+              <div class="form-group">
+                <label for="">收件地址</label>
+                <input type="text" class="form-control" :class="{'is-invalid': errors.has('address')}" name="address" v-model="form.user.address" v-validate="'required'">
+                <small class="invalid-feedback">請填寫地址</small>
+              </div>
+              <div class="form-group">
+                <label for="">備註</label>
+                <textarea class="form-control" v-model="form.message" cols="30" rows="6"></textarea>
+              </div>
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary">送出訂單</button>
+              </div>
+            </form>
           </div>
-          <div>
-            <strong class="mr-3">{{item.final_total}}</strong>
-            <button class="btn btn-danger" @click="delFormCart(item.id)">刪除</button>
-          </div>
-        </li>
-      </ul>
-      <hr>
-      <div class="text-right">總計 </div>
+        </div>
+
+        <!-- 購物車 -->
+        <div class="col-md-5">
+          <h4>購物車</h4>
+          <ul class="list-unstyled list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in cartData.carts" :key="item.id">
+              <div class="flex-shrink-1">
+                <h5 class="font-weight-bold mb-0">{{item.product.title}}</h5>
+                <small class="text-muted">{{item.product.price | moneyFilter}} X {{item.qty}}</small>  
+              </div>
+              <div class="text-nowrap"> 
+                <strong class="mr-3">{{item.final_total | moneyFilter}} <small>TWD</small></strong>
+                <button class="btn btn-danger" @click="delFormCart(item.id)">刪除</button>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <div class="form-inline">
+                <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠代碼">
+              </div>
+              <button type="button" class="btn btn-primary" @click="applyCoupon">套用</button>
+            </li>
+            <li class="list-group-item text-right">
+              <strong>總計：{{cartData.total | moneyFilter}} <small>TWD</small></strong>
+            </li>
+            <li v-if="cartData.total !== cartData.final_total" class="list-group-item text-right">
+              <strong class="text-primary">優惠價：{{cartData.final_total | moneyFilter}} <small>TWD</small></strong>
+            </li>          
+          </ul>
+        </div>
+      </div>
+
+
     </div>
 </template>
 
@@ -90,11 +141,21 @@ import Pagination from '@/components/pagination.vue';
 export default {
   data() {
     return {
+      coupon_code: '',
       product: {},
       pagination: {},
       products: [],
       cartData: {},
-      isLoading: false
+      isLoading: false,
+      form:{
+        user: {
+          name: "",
+          email: "",
+          tel: "",
+          address: ""
+        },
+        message: ""
+      }
     }
   },
   components:{Pagination},
@@ -143,7 +204,6 @@ export default {
       let vm = this;
       this.$http.delete(api)
       .then((res)=>{
-        console.log(res);
         vm.$bus.$emit('message:push',res.data.message,'success');
         vm.getCart();
       })
@@ -154,10 +214,45 @@ export default {
       let vm = this;
       this.$http.get(api)
       .then((res)=>{
-        console.log(res.data);
         vm.cartData = res.data.data;
         vm.isLoading = false; 
-
+      })
+    },
+    applyCoupon(){
+      this.isLoading = true;
+      let code = {"code": this.coupon_code}
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/coupon`;
+      let vm = this;
+      this.$http.post(api,{data:code})
+      .then((res)=>{
+        if(res.data.success){
+          $('#productModal').modal('hide');
+          vm.$bus.$emit('message:push',res.data.message,'success');
+        }else{
+          vm.$bus.$emit('message:push',res.data.message,'danger');
+        }        
+        vm.getCart();
+        vm.isLoading = false; 
+      })
+    },
+    createOrder(){
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order`;
+      let vm = this;
+      this.$validator.validate().then((isValid)=>{
+        if(isValid){
+          this.isLoading = true;
+          this.$http.post(api,{data: vm.form})
+          .then((res)=>{
+            console.log(res)
+            if(res.data.success){
+              vm.$bus.$emit('message:push',res.data.message,'success');
+            }else{
+              vm.$bus.$emit('message:push',res.data.message,'danger');
+            }        
+            vm.getCart();
+            vm.isLoading = false; 
+          })
+        }
       })
     }
   },

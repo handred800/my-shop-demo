@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import ProductList from '../components/productList.vue'
 import OrderList from '../components/orderList.vue'
 import CustomOrder from "../components/customerOrder.vue";
+import CouponList from "../components/couponList.vue";
 
 Vue.use(VueRouter)
 
@@ -31,9 +32,9 @@ Vue.use(VueRouter)
         meta: { requiresAuth: true },
       },
       {
-        path: 'coponList',
-        name: 'CoponList',
-        component: OrderList,
+        path: 'couponList',
+        name: 'CouponList',
+        component: CouponList,
         meta: { requiresAuth: true },
       }      
     ]

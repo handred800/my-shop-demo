@@ -4,24 +4,22 @@
       <table class="table mt-3">
         <thead class="bg-light">
           <tr>
-            <th width="200">時間</th>
-            <th width="100">付款方式</th>
-            <th width="80">金額</th>
+            <th width="200">建立時間</th>
+            <th width="100">金額</th>
             <th width="100">狀態</th>
             <th></th>                      
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in orders" :key="item.id">
-            <td>{{item.create_at}}</td>
-            <td>{{item.payment_method}}</td>
-            <td>{{item.total}}</td>
+            <td>{{item.create_at | timeFilter}}</td>
+            <td>{{item.total | moneyFilter}}</td>
             <td>
               <span v-if="item.is_paid === 1" class="text-primary">已付款</span>
               <span v-else class="text-danger">尚未付款</span>
             </td>
             <td class="text-center">
-              <button class="btn btn-primary" @click="openModal(false,item)">編輯</button>
+              <button class="btn btn-primary" @click="openModal(item)">查看</button>
             </td>
           </tr>
         </tbody>
@@ -31,13 +29,10 @@
       
       <!-- 商品彈窗 -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                <span v-if="isAdd">新增商品</span>
-                <span v-else>編輯商品</span>
-              </h5>
+              <h5 class="modal-title" id="exampleModalLabel">訂單內容</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -45,39 +40,71 @@
             <form action="" @submit.prevent="updateProduct">
             <div class="modal-body">
               <div class="form-row">
-                <div class="col-md-6 form-group">
-                  <label for="">原價</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
-                    </div>
-                    <input type="number" min="0" class="form-control" required>
-                  </div>
+                <div class="col-md-4 form-group">
+                  <label for="">建立時間</label>
+                  <p>{{tempOrder.create_at | timeFilter}}</p>
                 </div>
-                <div class="col-md-6 form-group">
-                  <label for="">售價</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
-                    </div>
-                    <input type="number" min="0" class="form-control" required>
-                  </div>                  
-                </div>            
+                <div class="col-md-4 form-group">
+                  <label for="">付款狀態</label>
+                  <p>
+                    <span v-if="tempOrder.is_paid">已付款</span>
+                    <span v-else class="text-danger">尚未付款</span>
+                  </p>
+                </div>
               </div>
               <div class="form-group">
-                <label for="">商品描述</label>
-                <textarea class="form-control" name="" id="" cols="30" rows="6"></textarea>
+                <label for="">訂單明細</label>
+                <table class="table">
+                  <thead class="bg-light">
+                    <tr>
+                      <th>商品</th>
+                      <td>數量</td>
+                      <th width="100">小計</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in OrderproductsData" :key="item.id">
+                      <td>{{item.product.title}}</td>
+                      <td>{{item.qty}}</td>
+                      <td class="text-right">{{item.final_total | moneyFilter}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="3" class="text-right">總計：{{tempOrder.total | moneyFilter}}</td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
+              <div class="form-group">
+                <label for="">姓名</label>
+                <p>{{tempOrder.user.name}}</p>
+              </div>
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <label for="">Email</label>
+                  <p>{{tempOrder.user.email}}</p>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="">連絡電話</label>
+                  <p>{{tempOrder.user.tel}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="">地址</label>
+                <p>{{tempOrder.user.address}}</p>
+              </div>                        
+              <div class="form-group">
+                <label for="">備註</label>
+                <p>{{tempOrder.message}}</p>
+              </div>
+              
+              
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消返回</button>
-              <button type="submit" class="btn btn-primary">儲存變更</button>
-            </div>              
             </form>
-
           </div>
         </div>
-      </div>
+      </div>  
     </div>
 </template>
 
@@ -88,7 +115,6 @@ import Pagination from '@/components/pagination.vue';
 export default {
   data() {
     return {
-      isAdd: false,
       pagination: {},
       tempOrder: {},
       orders: [],
@@ -104,63 +130,39 @@ export default {
       this.$http.get(api)
       .then((res)=>{
         console.log(res)
-        vm.products = res.data.products;
+        vm.orders = res.data.orders;
         vm.pagination = res.data.pagination;
         vm.isLoading = false;
       })
     },
-    updateOrder(){
-      let vm = this;
-      let api = '';
-      let httpMethod = '';
-      
-      if(vm.isAdd){
-        api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/order`;
-        httpMethod = 'post';
-      }else{
-        api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/order/${vm.tempProduct.id}`
-        httpMethod = 'put';
-      }
-      this.$http[httpMethod](api,{data: vm.tempOrder})
-      .then((res)=>{
-        if(res.data.success){
-          $('#productModal').modal('hide');
-          vm.getOrders();
-          vm.$bus.$emit('message:push',res.data.message,'success');
-        }else{
-          vm.$bus.$emit('message:push',res.data.message,'danger');
-        }
-      })
-    },
-    openModal(isAdd,item){
+    openModal(item){
+      this.tempOrder = Object.assign({},item);
       $('#productModal').modal('show');
-      if(isAdd){
-        this.tempProduct = {}
+    }
+  },
+  computed:{
+    OrderproductsData(){
+      if(Object.keys(this.tempOrder).length === 0){
+        console.log('空的');
+        return [];
       }else{
-        this.tempProduct = Object.assign({},item);
+        console.log('不是空的');
+        let values = Object.values(this.tempOrder.products);
+        return values;
       }
-      this.isAdd = isAdd
-    },
-    uploadImage(){
-      console.log(this)
-      let uploadFile = this.$refs.files.files[0];
-      let vm = this;
-      let formData = new FormData();
-
-      formData.append('file',uploadFile);
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/upload`
-      this.$http.post(api,formData,{
-        header: {
-          "Content-Type": "multipart/form-data" 
-        }
+    }
+  },
+  filters:{
+    timeFilter(timeStamp){
+      let time = new Date(timeStamp*1000).toLocaleString(undefined,{
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
       })
-      .then((res)=>{
-        if(res.data.success){
-          vm.$set(vm.tempProduct,'image',res.data.imageUrl);
-        }else{
-          vm.$bus.$emit('message:push',res.data.message,'danger');
-        }
-      })
+      return time;
     }
   },
   created() {
