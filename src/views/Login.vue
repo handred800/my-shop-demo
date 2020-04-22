@@ -38,7 +38,7 @@ export default {
       .then((res)=>{
         console.log(res)
         if(res.data.success){
-          vm.$router.push('/admin')
+          vm.$router.push('/admin/product_list')
           vm.$bus.$emit('message:push',res.data.message,'success');
         }else{
           vm.$bus.$emit('message:push',res.data.message,'danger');
