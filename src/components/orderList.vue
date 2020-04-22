@@ -28,7 +28,7 @@
       <pagination :pagination="pagination" @page-switch="getOrders"></pagination>  
       
       <!-- 商品彈窗 -->
-      <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" v-if="tempOrder.total" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -137,7 +137,7 @@ export default {
     },
     openModal(item){
       this.tempOrder = Object.assign({},item);
-      $('#productModal').modal('show');
+      $('#orderModal').modal('show');
     }
   },
   computed:{

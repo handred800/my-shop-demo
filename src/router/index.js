@@ -4,15 +4,16 @@ import Admin from '../views/Admin.vue'
 import Login from '../views/Login.vue'
 import ProductList from '../components/productList.vue'
 import OrderList from '../components/orderList.vue'
-import CustomOrder from "../components/customerOrder.vue";
 import CouponList from "../components/couponList.vue";
+import CustomCheckout from "../components/customerCheckout.vue";
+import CustomOrder from "../components/customerOrder.vue";
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '*',
-    redirect: 'login'
+      redirect: 'ProductList'
   },
   {
     path: '/admin',
@@ -20,19 +21,19 @@ Vue.use(VueRouter)
     component: Admin,
     children:[
       {
-        path: 'productList',
+        path: 'product_list',
         name: 'ProductList',
         component: ProductList,
         meta: { requiresAuth: true },
       },
       {
-        path: 'orderList',
+        path: 'order_list',
         name: 'OrderList',
         component: OrderList,
         meta: { requiresAuth: true },
       },
       {
-        path: 'couponList',
+        path: 'coupon_list',
         name: 'CouponList',
         component: CouponList,
         meta: { requiresAuth: true },
@@ -45,10 +46,15 @@ Vue.use(VueRouter)
     component: Admin,
     children: [
       {
-        path: 'customOrder',
+        path: 'custom_checkout',
+        name: 'CustomCheckout',
+        component: CustomCheckout,
+      },
+      {
+        path: 'custom_order/:id',
         name: 'CustomOrder',
         component: CustomOrder,
-      }
+      }      
     ]
   },  
   {

@@ -23,7 +23,7 @@ import moneyFilter from './money_format'
 Vue.config.productionTip = false;
 
 Vue.component('Loading',Loading);
-Vue.filter('moneyFilter', moneyFilter)
+Vue.filter('moneyFilter', moneyFilter);
 
 
 

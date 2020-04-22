@@ -3,23 +3,23 @@
     <div class="sidebar-sticky">
       <h6 class="text-muted px-3 mt-3">管理員</h6>
       <ul class="nav flex-column">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link to="/admin" class="nav-link">
             總覽
           </router-link>
-        </li>
+        </li> -->
         <li class="nav-item">
-          <router-link to="/admin/orderList" class="nav-link">
+          <router-link to="/admin/order_list" class="nav-link">
             訂單管理
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/admin/productList" class="nav-link">
+          <router-link to="/admin/product_list" class="nav-link">
             商品管理
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/admin/couponList" class="nav-link">
+          <router-link to="/admin/coupon_list" class="nav-link">
             優惠券管理
           </router-link>
         </li>        
@@ -27,7 +27,7 @@
       <h6 class="text-muted px-3 mt-3">模擬功能</h6>
       <ul class="nav flex-column">
         <li class="nav-item">
-          <router-link to="/customOrder" class="nav-link">
+          <router-link to="/custom_checkout" class="nav-link">
             模擬購物
           </router-link>
         </li>
