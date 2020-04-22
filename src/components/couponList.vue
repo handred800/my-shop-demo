@@ -67,7 +67,7 @@
                 <input type="date" class="form-control" v-model="tempCoupon.due_date">
               </div>
               <label for="is_enabled">
-                <input type="checkbox" id="is_enabled" v-model="tempCoupon.is_enabled"> 是否啟用
+                <input type="checkbox" id="is_enabled" v-model="tempCoupon.is_enabled" :true-value="1" :false-value="0"> 是否啟用
               </label>
 
             </div>

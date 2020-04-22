@@ -114,7 +114,7 @@
                     <textarea class="form-control" name="" id="" cols="30" rows="6" v-model="tempProduct.description"></textarea>
                   </div>
                   <label for="is_enabled">
-                    <input id="is_enabled" type="checkbox" v-model="tempProduct.is_enabled">上架此商品
+                    <input id="is_enabled" type="checkbox" v-model="tempProduct.is_enabled" :true-value="1" :false-value="0">上架此商品
                   </label>
                 </div>
               </div>
