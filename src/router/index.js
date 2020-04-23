@@ -2,11 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Admin from '../views/Admin.vue'
 import Login from '../views/Login.vue'
-import ProductList from '../components/productList.vue'
-import OrderList from '../components/orderList.vue'
-import CouponList from "../components/couponList.vue";
-import CustomerCheckout from "../components/customerCheckout.vue";
-import CustomerOrder from "../components/customerOrder.vue";
+import ProductList from '../components/admin/productList.vue'
+import OrderList from '../components/admin/orderList.vue'
+import CouponList from "../components/admin/couponList.vue";
+import CustomerCheckout from "../components/admin/customerCheckout.vue";
+import CustomerOrder from "../components/admin/customerOrder.vue";
 
 Vue.use(VueRouter)
 

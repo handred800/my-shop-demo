@@ -7,7 +7,7 @@
           <tr>
             <th width="25%">名稱(折扣碼)</th>
             <th width="100">折數(%)</th>
-            <th width="150">到期日</th>
+            <th width="200">到期日</th>
             <th width="100">狀態</th>
             <th></th>                      
           </tr>
@@ -16,7 +16,7 @@
           <tr v-for="item in coupons" :key="item.id">
             <td>{{item.title}}<br><small class="text-muted">{{item.code}}</small></td>
             <td>-{{item.percent}}%</td>
-            <td>{{item.due_date}}</td>
+            <td>{{item.due_date | timeFilter}}</td>
             <td>
               <span v-if="item.is_enabled" class="text-primary">啟用</span>
               <span v-else class="text-danger">未啟用</span>
@@ -36,7 +36,7 @@
       <!-- 商品彈窗 -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-          <div class="modal-content">
+          <div v-if="tempCoupon.due_date" class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">
                 <span v-if="isAdd">新增優惠券</span>
@@ -64,7 +64,8 @@
               </div>              
               <div class="form-group">
                 <label for="">到期日</label>
-                <input type="date" class="form-control" v-model="tempCoupon.due_date">
+                <date-input v-model="tempCoupon.due_date"></date-input>
+                <!-- <input type="date" class="form-control" v-model="tempCoupon.due_date"> -->
               </div>
               <label for="is_enabled">
                 <input type="checkbox" id="is_enabled" v-model="tempCoupon.is_enabled" :true-value="1" :false-value="0"> 是否啟用
@@ -86,6 +87,7 @@
 <script>
 import $ from "jquery";
 import Pagination from '@/components/pagination.vue';
+import DateInput from '@/components/dateInput.vue';
 
 export default {
   data() {
@@ -97,7 +99,7 @@ export default {
       isLoading: false
     }
   },
-  components:{Pagination},
+  components:{Pagination,DateInput},
   methods: {
     getCoupons(page = this.pagination.current_page){
       let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/coupons?page=${page}`;
