@@ -1,0 +1,57 @@
+// 首頁banner
+.index-banner {
+    overflow: hidden;
+    border-radius: $radius;
+    box-shadow: $shadow;
+
+    .index-banner-item {
+        @include bg-image(300px);
+
+        .banner-text {
+            position: absolute;
+            bottom: 0;
+            display: block;
+            max-width: 500px;
+            padding: 1em;
+            box-sizing: border-box;
+            @include transition;
+            transform: translateY(0);
+        }
+
+        &:hover {
+            .banner-text {
+                transform: translateY(-5%);
+            }
+        }
+
+        .banner-title,
+        .banner-description {
+            margin: 0;
+            color: #fff;
+            transform: translateY(30%);
+            opacity: 0;
+            @include transition(.5s, .3s);
+        }
+        .banner-title{
+            font-size: 2em;
+        }
+
+        .banner-description {
+            @include transition(.5s, .6s);
+        }
+    }
+
+    .swiper-slide-active {
+
+        .banner-title,
+        .banner-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+.swiper-pagination-bullet {
+    background-color: #fff;
+    opacity: 1;
+}

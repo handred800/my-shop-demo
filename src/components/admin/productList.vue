@@ -110,8 +110,12 @@
                     </div>            
                   </div>
                   <div class="form-group">
+                    <label for="">影片網址</label>
+                    <input type="text" class="form-control" v-model="tempProduct.content">
+                  </div>
+                  <div class="form-group">
                     <label for="">商品描述</label>
-                    <textarea class="form-control" name="" id="" cols="30" rows="6" v-model="tempProduct.description"></textarea>
+                    <textarea class="form-control" cols="30" rows="6" v-model="tempProduct.description"></textarea>
                   </div>
                   <label for="is_enabled">
                     <input id="is_enabled" type="checkbox" v-model="tempProduct.is_enabled" :true-value="1" :false-value="0">上架此商品

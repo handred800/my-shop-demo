@@ -1,15 +1,13 @@
 @import "~bootstrap/scss/_functions";
-@import "./custom_variables.scss";
+@import "./custom_variables";
 @import "~bootstrap/scss/bootstrap";
 
-body {
-    background-color: $gray-200;
-}
+// custom scss
+@import "./variable";
 
-.sidebar .nav-link {
-    transition: background-color .15s;
+@import "./custom/navbar";
+@import "./custom/layout";
 
-    &:hover,&.active{
-        background-color: $gray-300;
-    }
-}
+@import "./custom/_swiperExtend";
+@import "./custom/_products";
+@import "./custom/_colorBlock";

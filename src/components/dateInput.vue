@@ -13,7 +13,7 @@
 export default {
   name: 'dateInput',
   props:{
-    value: 0
+    value: 0 //timestamp
   },
   data() {
     return {
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     dateToYYYYMMDD(timestamp) {
-      // props timestamp 轉 日期string(顯示)
+      // props.value 從 timestamp 轉 日期string(用於顯示)
       let date = new Date(timestamp*1000);
       return date && date.toISOString().split('T')[0]
     },

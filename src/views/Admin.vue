@@ -16,20 +16,13 @@
 
 <script>
 // @ is an alias to /src
-import ProductList from '@/components/admin/productList.vue'
 import Navbar from '@/components/admin/navbar.vue'
 import Sidebar from '@/components/admin/sidebar.vue'
 
-
 export default {
   name: 'Home',
-  data() {
-    return {
-
-    }
-  },
   components: {
-    ProductList,Navbar,Sidebar
+    Navbar,Sidebar
   },
 }
 </script>

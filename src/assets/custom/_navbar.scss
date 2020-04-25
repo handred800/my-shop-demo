@@ -1,0 +1,16 @@
+  #navbar {
+      padding: 30px 30px 75px;
+      background-color: $primary-color;
+
+      &.floating {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 999;
+
+      }
+      .nav-link{
+          color: #fff;
+      }
+  }
