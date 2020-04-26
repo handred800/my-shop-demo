@@ -1,20 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+import Front from '../views/Front.vue'
 import Admin from '../views/Admin.vue'
 import Login from '../views/Login.vue'
+// front
+import Home from '../components/front/home.vue'
+import GameList from "../components/front/productList.vue";
+import GameInfo from "../components/front/productInfo.vue";
+import Order from "../components/front/order.vue";
+// admin
 import ProductList from '../components/admin/productList.vue'
 import OrderList from '../components/admin/orderList.vue'
 import CouponList from "../components/admin/couponList.vue";
-import CustomerCheckout from "../components/admin/customerCheckout.vue";
-import CustomerOrder from "../components/admin/customerOrder.vue";
+
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '*',
-      redirect: 'Login'
+      redirect: 'Home'
   },
   {
     path: '/admin',
@@ -43,18 +49,23 @@ Vue.use(VueRouter)
   },
   {
     path: '/',
-    name: 'customer',
-    component: Home,
+    name: 'Front',
+    component: Front,
     children: [
       {
-        path: 'games',
-        name: 'CustomerCheckout',
-        component: CustomerCheckout,
+        path: '',
+        name: 'Home',
+        component: Home,
       },
       {
-        path: 'customer_order/:orderId',
-        name: 'CustomerOrder',
-        component: CustomerOrder,
+        path: 'games',
+        name: 'GameList',
+        component: GameList,
+      },
+      {
+        path: 'games/:gameId',
+        name: 'GameInfo',
+        component: GameInfo,
       }      
     ]
   },  

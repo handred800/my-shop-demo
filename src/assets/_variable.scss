@@ -6,11 +6,13 @@ $shadow: 0 0 15px -2px rgba(black, .3);
 $radius: 8px;
 $radius-sm: calc(#{$radius} * 2 / 3);
 
-@mixin bg-gradient-down-top($color: #12112e) {
+
+
+@mixin bg-gradient($color: #12112e, $deg: 0deg) {
     background: $color;
-    background: -moz-linear-gradient(0deg, rgba($color, .7) 15%, rgba($color, 0) 80%);
-    background: -webkit-linear-gradient(0deg, rgba($color, .7) 15%, rgba($color, 0) 80%);
-    background: linear-gradient(0deg, rgba($color, .7) 15%, rgba($color, 0) 80%);
+    background: -moz-linear-gradient(#{$deg}, rgba($color, .7) 15%, rgba($color, 0) 80%);
+    background: -webkit-linear-gradient(#{$deg}, rgba($color, .7) 15%, rgba($color, 0) 80%);
+    background: linear-gradient(#{$deg}, rgba($color, .7) 15%, rgba($color, 0) 80%);
 }
 
 @mixin transition($second:.3s, $delay:0s) {
@@ -30,7 +32,7 @@ $radius-sm: calc(#{$radius} * 2 / 3);
 
     // 半透明遮罩
     &:before {
-        @include bg-gradient-down-top;
+        @include bg-gradient;
         content: '';
         display: block;
         width: 100%;
@@ -47,3 +49,17 @@ $radius-sm: calc(#{$radius} * 2 / 3);
 .secondary-color {
     color: $secondary-color;
 }
+
+
+// @media query
+@mixin screen-max-xs() {
+    @media screen and (max-width: 575px) {
+        @content
+    };
+};
+
+@mixin screen-max-sm() {
+    @media screen and (max-width: 767px) {
+        @content
+    };
+};

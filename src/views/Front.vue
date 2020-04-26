@@ -12,5 +12,8 @@
 <script>
 // @ is an alias to /src
 import Navbar from '@/components/front/navbar.vue'
-import Sidebar from '@/components/front/sidebar.vue'
 
+export default{
+  components:{Navbar}
+}
+</script>

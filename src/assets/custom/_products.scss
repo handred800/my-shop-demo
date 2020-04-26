@@ -1,8 +1,11 @@
 .product-wrapper {
     @include bg-image;
+    @include transition;
     box-shadow: $shadow;
     overflow: hidden;
     border-radius: $radius;
+    cursor: pointer;
+    transform: scale(1);
 
     .product-content {
         position: absolute;
@@ -26,7 +29,7 @@
         position: absolute;
         right: .5rem;
         top: .5rem;
-        font-size: 75%;
+        font-size: 1rem;
     }
 
     .product-title {
@@ -34,6 +37,7 @@
     }
 
     &:hover{
+        transform: scale(1.02);
         .product-content{
             transform: translateY(-5%);
         }

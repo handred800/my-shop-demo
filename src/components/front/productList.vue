@@ -1,29 +1,62 @@
 <template>
-    <div>
-      <loading :active.sync="isLoading"></loading>
-      <div class="form-row">
-        <div class="col-sm-6 col-lg-4 mb-3" v-for="item in products" :key="item.id">
-          <div class="card shadow-sm">
-            <div class="card-img-wrapper" :style="`backgroundImage:url(${item.image})`">
-              <span class="badge badge-warning card-img-tag">{{item.category}}</span>
-            </div>
-            <!-- <img :src="item.image" class="card-img-top" alt="..."> -->
-            <div class="card-body">
-              <h3 class="card-title font-weight-bold">{{item.title}}</h3>
-              <p class="card-text card-text-mask">{{item.description | textSummary}}</p>
-              <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <small v-if="item.price != 0" class="text-muted"><s>{{item.origin_price | moneyFilter}} TWD</s></small>
-                <strong v-if="item.price != 0" class="text-danger">{{item.price | moneyFilter}} <small>TWD</small></strong>
-                <strong v-else class="ml-auto">{{item.origin_price | moneyFilter}} <small>TWD</small></strong>
-              </h4>
-              <div class="btn-group w-100">
-                <button class="btn btn-sm btn-outline-primary" @click="openModal(item.id)">看更多</button>
-                <button type="button" class="btn btn-sm btn-primary" @click="addToCart(item.id)">加入購物車</button>
+    <div class="p-4">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="sticky-top py-3">
+            123123
+          </div>
+        </div>
+        <div class="col-md-10">
+            <div class="sticky-top p-3 bg-white">
+              <div class="form-group">
+                <label for="">搜尋</label>
+                <input type="text" class="form-control">
               </div>
+            </div>          
+          <div class="form-row">
+            <loading :active.sync="isLoading" :is-full-page="false"></loading>
+            <div class="col-sm-6 col-lg-4 mb-3" v-for="item in products" :key="item.id">
+              <div class="product-wrapper" :style="`backgroundImage:url(${item.image})`" @click="$router.push(`/games/${item.id}`)">
+                  <span class="product-tag">{{item.category}}</span>
+                  <div class="product-content">
+                      <div>
+                          <h5 class="product-title">{{item.title}}</h5>
+                          <span v-if="item.price === item.origin_price">${{item.price | moneyFilter}}</span>
+                          <span v-else>
+                              <span class="text-primary mr-1">${{item.price | moneyFilter}}</span> 
+                              <small><s class="text-muted">${{item.price | moneyFilter}}</s></small>
+                          </span>
+                      </div>
+                      <div>
+                          <button type="button" class="btn btn-outline-primary">
+                              <font-awesome-icon icon="shopping-cart"/>
+                          </button>
+                      </div>
+                  </div>
+              </div>          
+              <!-- <div class="card shadow-sm">
+                <div class="card-img-wrapper" :style="`backgroundImage:url(${item.image})`">
+                  <span class="badge badge-warning card-img-tag">{{item.category}}</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title font-weight-bold">{{item.title}}</h3>
+                  <p class="card-text card-text-mask">{{item.description | textSummary}}</p>
+                  <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <small v-if="item.price != 0" class="text-muted"><s>{{item.origin_price | moneyFilter}} TWD</s></small>
+                    <strong v-if="item.price != 0" class="text-danger">{{item.price | moneyFilter}} <small>TWD</small></strong>
+                    <strong v-else class="ml-auto">{{item.origin_price | moneyFilter}} <small>TWD</small></strong>
+                  </h4>
+                  <div class="btn-group w-100">
+                    <button class="btn btn-sm btn-outline-primary" @click="openModal(item.id)">看更多</button>
+                    <button type="button" class="btn btn-sm btn-primary" @click="addToCart(item.id)">加入購物車</button>
+                  </div>
+                </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
+
 
       <!-- 商品彈窗 -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -59,7 +92,7 @@
               </div>
           </div>
       </div>
-      <pagination :pagination="pagination" @page-switch="getProducts"></pagination>
+      <!-- <pagination :pagination="pagination" @page-switch="getProducts"></pagination> -->
 
 
       <!-- 訂單區塊 -->
@@ -165,8 +198,8 @@ export default {
   },
   components:{Pagination},
   methods: {
-    getProducts(page = this.pagination.current_page){
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/products?page=${page}`;
+    getProducts(){
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/products/all`;
       let vm = this;
       this.isLoading = true;
       this.$http.get(api)
@@ -269,7 +302,7 @@ export default {
     }
   },
   created() {
-    this.getProducts(1);
+    this.getProducts();
     this.getCart();
   },
 }

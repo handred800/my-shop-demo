@@ -1,11 +1,11 @@
 // 首頁banner
 .index-banner {
-    overflow: hidden;
+    // overflow: hidden;
     border-radius: $radius;
     box-shadow: $shadow;
 
     .index-banner-item {
-        @include bg-image(300px);
+        @include bg-image(350px);
 
         .banner-text {
             position: absolute;
@@ -32,7 +32,8 @@
             opacity: 0;
             @include transition(.5s, .3s);
         }
-        .banner-title{
+
+        .banner-title {
             font-size: 2em;
         }
 
@@ -51,7 +52,42 @@
     }
 }
 
+.product-carousel {
+
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 50px;
+        height: 100%;
+        z-index: 2;
+    }
+
+    &:before {
+        @include bg-gradient(#fff, 90deg);
+    }
+
+    &:after {
+        right: 0;
+        @include bg-gradient(#fff, -90deg);
+    }
+}
+
+.loading-holder{
+    background-color: #dddddd;
+    padding-bottom: 150px;
+}
+
 .swiper-pagination-bullet {
     background-color: #fff;
     opacity: 1;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: $primary-color;
+    font-weight: bold;
+    // background-color: $primary-color;
 }
