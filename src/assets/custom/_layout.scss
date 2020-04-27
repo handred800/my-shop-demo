@@ -1,7 +1,20 @@
+// overwrite bootstrap
 body {
     background-color: #dee2e6;
 }
 
+.container-fluid {
+    max-width: 1366px;
+}
+
+@include screen-max-xs {
+    .container-fluid {
+        padding: 0;
+    }
+}
+
+// custom start
+// common utilities
 .main-wrapper {
     margin-top: -50px;
     background-color: #fff;
@@ -10,11 +23,15 @@ body {
     z-index: 99;
 }
 
-@include screen-max-xs {
-    .container-fluid {
-        padding: 0;
-    }
+::-webkit-scrollbar {
+    width: 0;
 }
+
+.scroller-wrapper {
+    overflow-y: scroll;
+    height: 100%;
+}
+
 
 
 // Home
@@ -42,25 +59,59 @@ body {
     }
 }
 
-// product
+// productInfo
 .product-info-wrapper {
     position: relative;
     overflow: hidden;
     border-radius: $radius;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    background-color: lighten($secondary-color, 50%);
 
     .product-bg-video {
         width: 100%;
         border-radius: $radius;
+        margin-bottom: -7px;
     }
 
     .product-info-panel {
         position: absolute;
-        width: 50%;
+        width: 40%;
+        max-width: 480px;
         top: 0;
         bottom: 0;
         right: 0;
+        padding: 1.5rem;
+        background-color: rgba(#fff, .85);
+        // backdrop-filter: blur(5px);
+        @include transition(.7s);
 
+        .description-wrapper {
+            white-space: pre-wrap;
+        }
+
+        .collapse-icon {
+            position: absolute;
+            top: 50%;
+            left: -15px;
+            background-color: #fff;
+            background-color: rgba(#fff, .75);
+            border-radius: $radius-sm;
+            width: 8px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        &.is-watching {
+            transform: translateX(100%);
+        }
+    }
+
+    @include screen-max-sm {
+        .product-info-panel {
+            position: relative;
+            width: auto;
+            margin: auto;
+            background-color: transparent;
+            // backdrop-filter: unset;
+        }
     }
 }

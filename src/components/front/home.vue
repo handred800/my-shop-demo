@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-3">
+    <div class="p-4">
       <div class="grid-home-top">
           <div class="grid-banner">
             <swiper class="index-banner">

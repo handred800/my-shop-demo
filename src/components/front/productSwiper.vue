@@ -1,9 +1,9 @@
 <template>
     <div class="position-relative" :class="{'loading-holder': isLoading}">
         <loading :active.sync="isLoading" :is-full-page="false"></loading>
-        <swiper :options="swiperOption" class="product-carousel py-3" v-if="allData.length > 0">
+        <swiper ref="productSwiper" :options="swiperOption" class="product-carousel py-3" v-if="allData.length > 0" @ready="bindSlideClick">
             <swiper-slide v-for="item in allData" :key="item.id">
-                <div class="product-wrapper" :style="`backgroundImage:url(${item.image})`" @click.prevent="routerToProduct(item.id)">
+                <div class="product-wrapper" :style="`backgroundImage:url(${item.image})`">
                     <span class="product-tag">{{item.category}}</span>
                     <div class="product-content">
                         <div>
@@ -15,9 +15,10 @@
                             </span>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-outline-primary">
+                            <button type="button" class="btn btn-outline-primary" v-if="item.is_enabled">
                                 <font-awesome-icon icon="shopping-cart"/>
                             </button>
+                            <button class="btn btn-secondary" disabled v-else>已售完</button>
                         </div>
                     </div>
                 </div>
@@ -31,7 +32,8 @@
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
- 
+
+
 export default {
   components: {
     Swiper,
@@ -65,7 +67,7 @@ export default {
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev'
-            },
+            }
         },
         isLoading: false,
       }
@@ -78,7 +80,6 @@ export default {
       this.$http.get(api)
       .then((res)=>{
         let products = res.data.products;
-        console.log(vm.filter)
         if(vm.filter === undefined){
             vm.allData = products;
         }else{
@@ -86,14 +87,25 @@ export default {
                 return (item.category === vm.filter.category && item.title !== vm.filter.title)
             })
         }
-        console.log(vm.allData)
         vm.isLoading = false;
       })
     },
-    routerToProduct(id){
-        console.log(id)
+    productClick(id){
+        // 路由切換, 頁面往上滾動
         this.$router.push(`/games/${id}`);
-    }, 
+        this.$emit('productSwiperClick');
+        window.scrollTo({top: 150, behavior: 'smooth'});
+    },
+    bindSlideClick(){
+        // vue-swiper 初始化完成時,綁定slide點擊事件
+        let vm = this;
+        let swiper = this.$refs.productSwiper.$swiper; // swiper 實例
+        //綁定路由切換方法
+        swiper.on('tap',function() {
+            let index = this.clickedSlide.getAttribute('data-swiper-slide-index')
+            vm.productClick(vm.allData[index].id);
+        })
+    }   
   },
   watch: {
       filter(){

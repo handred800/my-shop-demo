@@ -7,9 +7,9 @@
 
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto mr-3">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="" class="nav-link">編輯精選</a>
-          </li>          
+          </li>-->
           <li class="nav-item">
             <router-link to="/games" class="nav-link">遊戲商城</router-link>
           </li>
