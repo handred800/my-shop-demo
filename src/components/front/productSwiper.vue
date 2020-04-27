@@ -14,12 +14,12 @@
                                 <small><s class="text-muted">${{item.price | moneyFilter}}</s></small>
                             </span>
                         </div>
-                        <div>
+                        <!-- <div>
                             <button type="button" class="btn btn-outline-primary" v-if="item.is_enabled">
                                 <font-awesome-icon icon="shopping-cart"/>
                             </button>
                             <button class="btn btn-secondary" disabled v-else>已售完</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </swiper-slide>
@@ -94,7 +94,6 @@ export default {
         // 路由切換, 頁面往上滾動
         this.$router.push(`/games/${id}`);
         this.$emit('productSwiperClick');
-        window.scrollTo({top: 150, behavior: 'smooth'});
     },
     bindSlideClick(){
         // vue-swiper 初始化完成時,綁定slide點擊事件

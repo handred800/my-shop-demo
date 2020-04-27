@@ -59,6 +59,14 @@ body {
     }
 }
 
+// productList
+.product-list-wrapper{
+    position: relative;
+    &.is-loading{
+        height: 100vh;
+    }
+} 
+
 // productInfo
 .product-info-wrapper {
     position: relative;

@@ -6,8 +6,8 @@ npm install
 ```
 
 ### 開發備註
-===
-#### vue-swiper : slide直接綁定Vue事件,在loop啟用的狀態下 複製出來的slide綁不到
+***
+* #### vue-swiper : slide直接綁定Vue事件,在loop啟用的狀態下 複製出來的slide綁不到
 ```html
 <!-- 不能直接使用vue事件綁定  -->
 <swiper :options="swiperOption">

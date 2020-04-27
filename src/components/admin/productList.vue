@@ -83,7 +83,6 @@
                           <option value="RPG">RPG</option>
                           <option value="策略">策略</option>
                           <option value="文字冒險">文字冒險</option>
-                          <option value="其他">其他</option>
                         </select>
                       </div>
                     </div>
@@ -95,7 +94,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" min="0" class="form-control" v-model="tempProduct.origin_price" required>
+                        <input type="number" min="0" class="form-control" v-model.number="tempProduct.origin_price" required>
 
                       </div>
                     </div>
@@ -105,7 +104,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" class="form-control" v-model="tempProduct.price">
+                        <input type="number" class="form-control" v-model.number="tempProduct.price">
                       </div>                  
                     </div>            
                   </div>
