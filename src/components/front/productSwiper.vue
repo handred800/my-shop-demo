@@ -84,7 +84,7 @@ export default {
             vm.allData = products;
         }else{
             vm.allData = products.filter(item=>{
-                return (item.category === vm.filter.category && item.title !== vm.filter.title)
+                return (item.category === vm.filter.category && item.title !== vm.filter.title && item.is_enabled)
             })
         }
         vm.isLoading = false;

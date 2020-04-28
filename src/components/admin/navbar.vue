@@ -11,7 +11,7 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li> -->
         </ul>
-        <button class="btn btn-outline-secondary" @click="logout">登出</button>
+        <button class="btn btn-outline-light" @click="logout">登出</button>
       </div>
     </nav>
 </template>

@@ -20,12 +20,14 @@
                             <label for="">購買數量</label>
                             <div class="input-group">
                                 <input type="number" class="form-control" v-model.number="qty" min="1" max="10">
-                                <button class="btn btn-primary">加入購物車</button>
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" @click="addToCart">加入購物車</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- 展開按鈕 -->
-                    <div class="collapse-icon" title="收合" @click="isWatching = !isWatching"></div>
+                    <div class="collapse-handler" title="收合" @click="isWatching = !isWatching"></div>
                 </div>
             </div>
         </section>
@@ -62,6 +64,9 @@ import ProductSwiper from "@/components/front/productSwiper";
                     window.scrollTo({top: 0, behavior: 'smooth'});
                     vm.isLoading = false;
                 })
+            },
+            addToCart(){
+                this.$bus.$emit('cart:addToCart', this.product.id, this.qty);
             }
         },
         created(){

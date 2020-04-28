@@ -59,12 +59,12 @@ $colors: map-merge(("blue": $blue,
   $colors);
 
 $primary: $blue !default;
-$secondary: $gray-300 !default;
+$secondary: $indigo !default;
 $success: $green !default;
 $info: $cyan !default;
 $warning: $yellow !default;
 $danger: $red !default;
-$light: $gray-100 !default;
+$light: $gray-200 !default;
 $dark: $gray-800 !default;
 
 $theme-colors: () !default;
@@ -967,7 +967,7 @@ $modal-lg: 800px !default;
 $modal-md: 500px !default;
 $modal-sm: 300px !default;
 
-$modal-fade-transform: translate(0, -50px) !default;
+$modal-fade-transform: scale(.8) !default;
 $modal-show-transform: none !default;
 $modal-transition: transform .3s ease-out !default;
 $modal-scale-transform: scale(1.02) !default;
