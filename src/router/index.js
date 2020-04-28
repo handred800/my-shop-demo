@@ -8,7 +8,10 @@ import Login from '../views/Login.vue'
 import Home from '../components/front/home.vue'
 import GameList from "../components/front/productList.vue";
 import GameInfo from "../components/front/productInfo.vue";
-import Order from "../components/front/order.vue";
+import OrderCheck from "../components/front/orderCheck.vue";
+import OrderForm from "../components/front/orderForm.vue";
+import OrderDetail from "../components/front/orderDetail.vue";
+
 // admin
 import ProductList from '../components/admin/productList.vue'
 import OrderList from '../components/admin/orderList.vue'
@@ -66,7 +69,23 @@ Vue.use(VueRouter)
         path: 'games/:gameId',
         name: 'GameInfo',
         component: GameInfo,
-      }      
+      },
+      {
+        path: 'order_check',
+        name: 'OrderCheck',
+        component: OrderCheck,
+      },
+      {
+        path: 'order_form',
+        name: 'OrderForm',
+        component: OrderForm,
+      },
+      {
+        path: 'order_detail/:orderId',
+        name: 'OrderDetail',
+        component: OrderDetail,
+      },      
+
     ]
   },  
   {

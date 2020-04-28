@@ -1,10 +1,10 @@
 <template>
   <div class="message-alert">
     <div class="alert alert-dismissible"
-      :class="'alert-' + item.status"
-      v-for="(item, i) in messages" :key="i">
+      :class="`alert-${item.status}`"
+      v-for="(item, index) in messages" :key="index">
       {{ item.message }}
-      <button type="button" class="close" @click="removeMessage(i)" aria-label="Close">
+      <button type="button" class="close" @click="removeMessage(inddex)" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -35,12 +35,12 @@ export default {
     removeMessageWithTiming(timestamp) {
       const vm = this;
       setTimeout(() => {
-        vm.messages.forEach((item, i) => {
+        vm.messages.forEach((item, index) => {
           if (item.timestamp === timestamp) {
-            vm.messages.splice(i, 1);
+            vm.messages.splice(index, 1);
           }
         });
-      }, 5000);
+      }, 3000);
     },
   },
   created() {
@@ -56,7 +56,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style lang="scss" scope>
 .message-alert {
   position: fixed;
   max-width: 40%;

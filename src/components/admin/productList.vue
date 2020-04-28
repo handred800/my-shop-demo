@@ -123,7 +123,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消返回</button>
+              <button type="button" class="btn btn-light" data-dismiss="modal">取消返回</button>
               <button type="submit" class="btn btn-primary">儲存變更</button>
             </div>              
             </form>
