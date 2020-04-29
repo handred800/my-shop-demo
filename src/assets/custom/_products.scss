@@ -7,6 +7,7 @@
     border-radius: $radius;
     cursor: pointer;
     transform: scale(1);
+    opacity: 1;
 
     .product-content {
         position: absolute;
@@ -37,10 +38,94 @@
         margin: 0;
     }
 
-    &:hover{
+    &:hover {
         transform: scale(1.02);
-        .product-content{
+        box-shadow: $shadow-arise;
+
+        .product-content {
             transform: translateY(-5%);
+        }
+    }
+}
+
+
+// productList 產品列表
+.product-list-wrapper {
+    position: relative;
+}
+
+// productList filter的動畫
+.product-filter {
+    @include transition(.5s);
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.product-filter-enter,
+.product-filter-leave-to {
+    transform: scale(.5) translateY(100px);
+    opacity: 0;
+}
+
+.product-filter-leave-active {
+    position: absolute;
+    z-index: -1;
+}
+
+
+// productInfo 產品內頁
+.product-info-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius;
+    background-color: lighten($secondary-color, 50%);
+
+    .product-bg-video {
+        width: 100%;
+        border-radius: $radius;
+        margin-bottom: -7px;
+    }
+
+    .product-info-panel {
+        position: absolute;
+        width: 40%;
+        max-width: 480px;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        padding: 1.5rem;
+        background-color: rgba(#fff, .85);
+        border-radius: $radius;
+        // backdrop-filter: blur(5px);
+        @include transition(.7s);
+
+        .description-wrapper {
+            white-space: pre-wrap;
+        }
+
+        .collapse-handler {
+            position: absolute;
+            top: 50%;
+            left: -15px;
+            background-color: rgba(#fff, .75);
+            border-radius: $radius-sm;
+            width: 8px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        &.is-watching {
+            transform: translateX(100%);
+        }
+    }
+
+    @include screen-max-sm {
+        .product-info-panel {
+            position: relative;
+            width: auto;
+            margin: auto;
+            background-color: transparent;
+            // backdrop-filter: unset;
         }
     }
 }

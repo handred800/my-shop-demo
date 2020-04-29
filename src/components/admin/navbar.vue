@@ -6,10 +6,10 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExample04">
-        <ul class="navbar-nav mr-auto">
-          <!-- <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li> -->
+        <ul class="navbar-nav ml-auto mr-3">
+          <li class="nav-item active">
+            <router-link to="/" class="nav-link"><font-awesome-icon icon="eye"/> 前台網站</router-link>
+          </li>
         </ul>
         <button class="btn btn-outline-light" @click="logout">登出</button>
       </div>

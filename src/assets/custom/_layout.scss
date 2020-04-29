@@ -13,14 +13,35 @@ body {
     }
 }
 
+section {
+    // margin: 1rem 0;
+    padding: 1.5rem 0;
+}
+
 // custom start
 // common utilities
 .main-wrapper {
+    position: relative;
     margin-top: -50px;
+    min-height: 60vh;
+    margin-bottom: 50px;
     background-color: #fff;
     border-radius: $radius;
     box-shadow: $shadow;
     z-index: 99;
+
+    &::before {
+        content: '';
+        display: block;
+        position: fixed;
+        width: 100%;
+        top: 30%;
+        left: 60%;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background-color: lighten($primary-color, 15%);
+    }
 }
 
 // loading placeholder (全頁)
@@ -37,11 +58,20 @@ body {
     height: 100%;
 }
 
-.section-title{
+.section-title {
+    position: relative;
     font-weight: bold;
+
+    svg[data-icon] {
+        width: .7em;
+    }
 }
 
-// Home
+footer {
+    padding: 3rem 0;
+}
+
+// Home 首頁
 .grid-home-top {
     display: grid;
     grid-template-rows: minmax(auto, 150px);
@@ -66,64 +96,65 @@ body {
     }
 }
 
-// productList
-.product-list-wrapper {
+.special-column-section {
     position: relative;
+
+    .special-column--content {
+        @include bg-image(0, false);
+        background-image: url('./assets/images/Ikaruga.jpg');
+        background-attachment: fixed;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            @include bg-gradient($primary-color, 120deg);
+        }
+
+        .special-column--text {
+            position: relative;
+            padding: 2.5rem 2rem 1.5rem;
+            width: 45%;
+            min-height: 280px;
+
+            h3 {
+                color: #fff;
+            }
+
+            p {
+                color: $gray-200;
+            }
+        }
+
+        @include screen-max-sm {
+            &::before {
+                background-color: rgba(lighten($primary-color, 10%), .5);
+            }
+
+            .special-column--text {
+                width: 100%;
+            }
+        }
+    }
 }
 
-// productInfo
-.product-info-wrapper {
+.news-section {
     position: relative;
-    overflow: hidden;
-    border-radius: $radius;
-    background-color: lighten($secondary-color, 50%);
+    background: radial-gradient($gray-400 20%, transparent 20%);
+    background-size: 10px 10px;
 
-    .product-bg-video {
-        width: 100%;
-        border-radius: $radius;
-        margin-bottom: -7px;
-    }
+    .card {
+        border: 0;
+        @include transition;
+        box-shadow: $shadow;
+        transform: translateY(0);
 
-    .product-info-panel {
-        position: absolute;
-        width: 40%;
-        max-width: 480px;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        padding: 1.5rem;
-        background-color: rgba(#fff, .85);
-        border-radius: $radius;
-        // backdrop-filter: blur(5px);
-        @include transition(.7s);
-
-        .description-wrapper {
-            white-space: pre-wrap;
-        }
-
-        .collapse-handler {
-            position: absolute;
-            top: 50%;
-            left: -15px;
-            background-color: rgba(#fff, .75);
-            border-radius: $radius-sm;
-            width: 8px;
-            height: 30px;
-            cursor: pointer;
-        }
-
-        &.is-watching {
-            transform: translateX(100%);
-        }
-    }
-
-    @include screen-max-sm {
-        .product-info-panel {
-            position: relative;
-            width: auto;
-            margin: auto;
-            background-color: transparent;
-            // backdrop-filter: unset;
+        &:hover {
+            box-shadow: $shadow-arise;
+            transform: translateY(-5px);
         }
     }
 }

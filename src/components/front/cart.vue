@@ -4,7 +4,6 @@
             <font-awesome-icon icon="shopping-cart"/>
             <span class="badge-cart badge badge-pill badge-danger" v-if="cartData.carts.length > 0">{{cartData.carts.length}}</span>
         </button>
-        
 
         <!-- 購物車彈窗 -->
         <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-hidden="true">

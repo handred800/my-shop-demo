@@ -3,10 +3,12 @@
 @import "~bootstrap/scss/bootstrap";
 
 // custom scss
-@import "./variable";
+@import "./_variable";
 
-@import "./custom/navbar";
-@import "./custom/layout";
+@import "./custom/_navbar";
+@import "./custom/_layout";
+
+@import "./custom/_columnPage";
 
 @import "./custom/_swiperExtend";
 @import "./custom/_products";

@@ -11,6 +11,7 @@ import GameInfo from "../components/front/productInfo.vue";
 import OrderCheck from "../components/front/orderCheck.vue";
 import OrderForm from "../components/front/orderForm.vue";
 import OrderDetail from "../components/front/orderDetail.vue";
+import ColumnPage from "../components/front/columnPage.vue";
 
 // admin
 import ProductList from '../components/admin/productList.vue'
@@ -84,7 +85,13 @@ Vue.use(VueRouter)
         path: 'order_detail/:orderId',
         name: 'OrderDetail',
         component: OrderDetail,
+      },
+      {
+        path: 'column',
+        name: 'ColumnPage',
+        component: ColumnPage,
       },      
+      
 
     ]
   },  

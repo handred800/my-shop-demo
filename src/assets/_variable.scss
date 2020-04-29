@@ -2,6 +2,7 @@ $primary-color: #20c997;
 $secondary-color: #6527a0;
 
 $shadow: 0 0 15px -2px rgba(black, .3);
+$shadow-arise: 0 5px 15px rgba(black, .3);
 
 $radius: 8px;
 $radius-sm: calc(#{$radius} * 2 / 3);
@@ -22,7 +23,7 @@ $radius-sm: calc(#{$radius} * 2 / 3);
     transition: all $second $delay cubic-bezier(0.645, 0.045, 0.355, 1.000);
 }
 
-@mixin bg_image($pb:46.5%) {
+@mixin bg_image($pb:46.5%,$has-overlay: true) {
     display: block;
     position: relative;
     padding-bottom: $pb;
@@ -30,15 +31,17 @@ $radius-sm: calc(#{$radius} * 2 / 3);
     background-repeat: no-repeat;
     background-size: cover;
 
-    // 半透明遮罩
-    &:before {
-        @include bg-gradient;
-        content: '';
-        display: block;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
+    @if($has-overlay){
+        // 半透明遮罩
+        &:before {
+            @include bg-gradient;
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+        }
     }
 }
 
@@ -60,6 +63,25 @@ $radius-sm: calc(#{$radius} * 2 / 3);
 
 @mixin screen-max-sm() {
     @media screen and (max-width: 767px) {
+        @content
+    };
+};
+
+// @media query
+@mixin screen-max-xs() {
+    @media screen and (max-width: 575px) {
+        @content
+    };
+};
+
+@mixin screen-min-sm() {
+    @media screen and (min-width: 768px) {
+        @content
+    };
+};
+
+@mixin screen-min-xs() {
+    @media screen and (min-width: 576px) {
         @content
     };
 };

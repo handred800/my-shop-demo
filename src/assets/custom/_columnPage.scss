@@ -1,0 +1,29 @@
+.column-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    img {
+        max-width: 100%;
+    }
+
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        @include bg-gradient(#fff, 270deg);
+    }
+}
+
+@include screen-min-sm {
+    .column-text-wrapper {
+        height: 450px;
+        overflow-y: scroll;
+    }
+}

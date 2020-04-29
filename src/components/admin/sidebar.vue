@@ -22,16 +22,8 @@
           <router-link to="/admin/coupon_list" active-class="active" class="nav-link">
             優惠券管理
           </router-link>
-        </li>        
-      </ul>
-      <h6 class="text-muted px-3 mt-3">模擬功能</h6>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <router-link to="/customer_checkout" class="nav-link">
-            模擬購物
-          </router-link>
         </li>
-      </ul>      
+      </ul>     
     </div>
   </nav>
 </template>
