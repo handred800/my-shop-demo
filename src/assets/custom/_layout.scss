@@ -18,7 +18,10 @@ section {
     padding: 1.5rem 0;
 }
 
-// custom start
+.form-inline .form-check{
+    width: auto;
+} // custom start
+
 // common utilities
 .main-wrapper {
     position: relative;
@@ -34,7 +37,6 @@ section {
         content: '';
         display: block;
         position: fixed;
-        width: 100%;
         top: 30%;
         left: 60%;
         width: 250px;

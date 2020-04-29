@@ -40,25 +40,28 @@
 
         <!-- 購物車 -->
         <div class="col-md-5">
-          <h2 class="section-title">商品明細</h2>
-          <ul class="list-unstyled list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in cartData.carts" :key="item.id">
-              <div class="flex-shrink-1">
-                <h5 class="font-weight-bold mb-0">{{item.product.title}}</h5>
-                <div class="text-secondary" v-if="item.coupon">{{item.coupon.title}}</div>
-                <small class="text-muted">{{item.product.price | moneyFilter}} X {{item.qty}}</small>  
-              </div>
-              <div class="text-nowrap"> 
-                <strong class="mr-3" :class="{'text-primary':item.coupon}">${{item.final_total | moneyFilter}}</strong>
-              </div>
-            </li>
-            <li class="list-group-item text-right">
-              <strong>總計：${{cartData.total | moneyFilter}}</strong>
-            </li>
-            <li v-if="cartData.total !== cartData.final_total" class="list-group-item text-right">
-              <strong class="text-primary">優惠價：${{cartData.final_total | moneyFilter}}</strong>
-            </li>
-          </ul>
+          <div class="sticky-top">
+            <h2 class="section-title">商品明細</h2>
+            <ul class="list-unstyled list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in cartData.carts" :key="item.id">
+                <div class="flex-shrink-1">
+                  <h5 class="font-weight-bold mb-0">{{item.product.title}}</h5>
+                  <div class="text-secondary" v-if="item.coupon">{{item.coupon.title}}</div>
+                  <small class="text-muted">{{item.product.price | moneyFilter}} X {{item.qty}}</small>  
+                </div>
+                <div class="text-nowrap"> 
+                  <strong class="mr-3" :class="{'text-primary':item.coupon}">${{item.final_total | moneyFilter}}</strong>
+                </div>
+              </li>
+              <li class="list-group-item text-right">
+                <strong>總計：${{cartData.total | moneyFilter}}</strong>
+              </li>
+              <li v-if="cartData.total !== cartData.final_total" class="list-group-item text-right">
+                <strong class="text-primary">優惠價：${{cartData.final_total | moneyFilter}}</strong>
+              </li>
+            </ul>
+
+          </div>
         </div>
       </div>    
     </div>

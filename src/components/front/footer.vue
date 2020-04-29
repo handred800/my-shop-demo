@@ -1,17 +1,20 @@
 <template>
-    <footer class="bg-light border-top">
+    <footer class="bg-dark border-top">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8">
-                    <h3>核心玩家</h3>
+            <div class="row no-gutters px-4">
+                <div class="col-md-4">
+                    <h3 class="text-light">核心玩家</h3>
                     <p class="text-muted">提供優質評測的數位遊戲平台</p>
                 </div>
                 <div class="col-md-4">
-                    <ul class="list-unstyled">
-                        <li>
-                            <router-link to="/login">管理者登入</router-link>
-                        </li>
-                    </ul>
+                    <p class="text-light">訂閱我們的電子報，可以獲得最新的遊戲資訊與秘密折扣！</p>
+                    <div class="input-group">
+                        <input type="mail" class="form-control" placeholder="abc123@mail.com">
+                        <div class="input-group-append">
+                            <button class="btn btn-light">訂閱</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

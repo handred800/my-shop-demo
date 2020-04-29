@@ -52,7 +52,7 @@
               <div class="card-body">
                 <small class="text-muted mr-3"><font-awesome-icon icon="calendar-alt"/> {{item.date}}</small>
                 <small class="text-muted"><font-awesome-icon icon="eye"/> {{item.views}}</small>
-                <p class="card-text">{{item.title}}</p>
+                <p class="card-text text-primary">{{item.title}}</p>
               </div>
             </div>
           </div>                    

@@ -33,6 +33,7 @@
                     </label>
                   </div>
                 </div>
+                <button type="button" class="btn btn-secondary btn-block" @click="filterProducts">篩選</button>
               </div>
             </div>          
           <div class="product-list-wrapper" :class="{'is-loading':isLoading}">

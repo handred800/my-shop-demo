@@ -56,7 +56,7 @@
                         </div>
                         <div v-else>
                             需要推薦遊戲給你嗎？
-                            <button class="btn btn-primary">好！</button>
+                            <button type="button" class="btn btn-primary" @click="routerTo('/column')">好！</button>
                         </div>
                     </div>                    
                 </div>
@@ -138,13 +138,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-    .btn-cart{
-        position: relative;
-        .badge-cart{
-            position: absolute;
-            right: -5px;
-        }
-    }
-</style>

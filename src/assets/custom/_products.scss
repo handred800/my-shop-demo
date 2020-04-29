@@ -89,7 +89,7 @@
     .product-info-panel {
         position: absolute;
         width: 40%;
-        max-width: 480px;
+        max-width: 450px;
         top: 0;
         bottom: 0;
         right: 0;
@@ -104,13 +104,15 @@
         }
 
         .collapse-handler {
+            $handle-width: 12px;
+            $handle-height: 50px;
             position: absolute;
-            top: 50%;
-            left: -15px;
+            top: calc(50% - #{$handle-height} / 2);
+            left: calc(#{-$handle-width} * 2);
             background-color: rgba(#fff, .75);
             border-radius: $radius-sm;
-            width: 8px;
-            height: 30px;
+            width: $handle-width;
+            height: $handle-height;
             cursor: pointer;
         }
 

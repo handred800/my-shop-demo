@@ -1,0 +1,30 @@
+.fixed-bar {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 9999;
+
+    .btn-cart,.btn-top {
+        margin-top: .5rem;
+        padding: .6rem 1rem;
+        font-size: 1.5rem;
+        @include transition(.15s);
+        transform: scale(1);
+        border-radius: 50%;
+        box-shadow: $shadow;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.btn-cart {
+    position: relative;
+
+    .badge-cart {
+        position: absolute;
+        right: -5px;
+        font-size: .8rem;
+    }
+}

@@ -67,7 +67,7 @@
             </div>
             <div v-else>
                 需要推薦遊戲給你嗎？
-                <button class="btn btn-primary">好！</button>
+                <router-link to="/column" class="btn btn-primary">好！</router-link>
             </div>
           </div>
           <div class="col-md-4">
