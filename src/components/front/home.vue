@@ -19,7 +19,7 @@
             <h2 class="block-title text-right">本周<br>折扣</h2>
             <div class="block-backdrop">weekly discount</div>
           </div>
-          <div class="color-block color-block-primary">
+          <div class="color-block color-block-primary" @click="copyToClipboard">
             <h2 class="block-title text-left">超級<br>招待券</h2>
             <div class="block-backdrop">awesome coupon</div>
           </div>          
@@ -117,7 +117,18 @@ export default {
   },
   components: {
     Pagination,ProductSwiper
-  }
+  },
+  methods: {
+      copyToClipboard(){
+          let $copyInput = document.getElementById('copy');
+          $copyInput.value = '90%awesome';
+          $copyInput.select();
+          document.execCommand('copy');
+          $copyInput.value = '';
+          $copyInput.blur();
+          this.$bus.$emit('message:push', '已複製折扣碼！', 'success');
+      }    
+  },
   
 }
 </script>

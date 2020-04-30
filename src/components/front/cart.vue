@@ -134,6 +134,7 @@ export default {
         vm.$bus.$on('cart:addToCart', (productId, qty = 1) => {
             vm.addToCart(productId,qty);
         });
+        vm.$bus.$on('cart:updateCart', vm.getCart);
         this.getCart();
     },
 }

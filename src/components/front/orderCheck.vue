@@ -1,11 +1,16 @@
 <template>
     <div class="p-4">
-      <div class="row">
-          <div class="col-md-8">
+        <div class="form-wizard">
+            <div class="form-wizard--step active">1.確認購物車</div>
+            <div class="form-wizard--step">2.填寫訂單資訊</div>
+            <div class="form-wizard--step">3.送出訂單</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
             <loading :active.sync="isLoading" :is-full-page="false"></loading>
             <div class="table-responsive" v-if="cartData.carts.length > 0">
                 <h2 class="section-title">購物車</h2>
-                <table class="table">
+                <table class="table bg-white">
                     <thead class="bg-light">
                         <tr>
                             <th>商品</th>
@@ -35,12 +40,12 @@
                     <tfoot>
                         <tr v-if="cartData.total === cartData.final_total">
                             <td>
-                              <div class="input-group">
+                                <div class="input-group">
                                 <input type="text" class="form-control" v-model="coupon_code" placeholder="winter30">
                                 <div class="input-group-append">
-                                  <button type="button" class="btn btn-secondary" @click="applyCoupon">使用招待券</button>
+                                    <button type="button" class="btn btn-secondary" @click="applyCoupon">使用招待券</button>
                                 </div>
-                              </div>                              
+                                </div>                              
                             </td>
                             <td class="text-right">
                                 <strong>總計：${{cartData.total | moneyFilter}}</strong>
@@ -48,12 +53,12 @@
                         </tr>
                         <tr v-else>
                             <td>
-                              <div class="input-group">
+                                <div class="input-group">
                                 <input type="text" class="form-control" v-model="coupon_code" placeholder="winter30">
                                 <div class="input-group-append">
-                                  <button type="button" class="btn btn-secondary" @click="applyCoupon">使用招待券</button>
+                                    <button type="button" class="btn btn-secondary" @click="applyCoupon">使用招待券</button>
                                 </div>
-                              </div>                              
+                                </div>                              
                             </td>                          
                             <td class="text-right">
                                 <strong class="text-primary">優惠價：${{cartData.final_total | moneyFilter}}</strong>
@@ -66,18 +71,19 @@
                 </div>
             </div>
             <div v-else>
-                需要推薦遊戲給你嗎？
+                <h2 class="section-title">購物車</h2>
+                <p>需要推薦遊戲給你嗎？</p>
                 <router-link to="/column" class="btn btn-primary">好！</router-link>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="color-block color-block-secondary">
-              <h2 class="block-title text-right">超級<br>招待券</h2>
-              <div class="block-backdrop">weekly discount</div>
             </div>
-          </div>
+            <div class="col-md-4">
+            <div class="color-block color-block-secondary" @click="copyToClipboard">
+                <h2 class="block-title text-right">超級<br>招待券</h2>
+                <div class="block-backdrop">weekly discount</div>
+            </div>
+            </div>
 
-      </div>
+        </div>
     </div>
 </template>
 
@@ -119,10 +125,10 @@ export default {
             .then((res) => {
                 if (res.data.success) {
                     vm.$bus.$emit('message:push', res.data.message, 'success');
-                    vm.coupon_code = "";
                 } else {
                     vm.$bus.$emit('message:push', res.data.message, 'danger');
                 }
+                vm.coupon_code = "";
                 vm.getCart();
                 vm.isLoading = false;
             })
@@ -137,6 +143,15 @@ export default {
                 vm.cartData = res.data.data;
                 vm.isLoading = false;
             })
+        },
+        copyToClipboard(){
+            let $copyInput = document.getElementById('copy');
+            $copyInput.value = '90%awesome';
+            $copyInput.select();
+            document.execCommand('copy');
+            $copyInput.value = '';
+            $copyInput.blur();
+            this.$bus.$emit('message:push', '已複製折扣碼！', 'success');
         }
     },
     created() {
@@ -144,13 +159,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-    .btn-cart{
-        position: relative;
-        .badge-cart{
-            position: absolute;
-            right: -5px;
-        }
-    }
-</style>

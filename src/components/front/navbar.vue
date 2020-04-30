@@ -15,6 +15,9 @@
             <li class="nav-item">
               <router-link to="/games" class="nav-link">遊戲商城</router-link>
             </li>
+            <li class="nav-item">
+              <router-link to="/login" class="nav-link">管理員登入</router-link>
+            </li>            
           </ul>
         <!-- <div class="collapse navbar-collapse" id="menu">
           

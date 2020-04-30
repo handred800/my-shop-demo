@@ -1,5 +1,10 @@
 <template>
     <div class="p-4">
+      <div class="form-wizard">
+          <div class="form-wizard--step">1.確認購物車</div>
+          <div class="form-wizard--step active">2.填寫訂單資訊</div>
+          <div class="form-wizard--step">3.完成購買</div>
+      </div>       
       <div class="row" :class="{'is-loading': isLoading}">
         <!-- 資料表單 -->
         <loading :active.sync="isLoading" :is-full-page="false"></loading>
@@ -103,22 +108,12 @@ export default {
                         } else {
                             vm.$bus.$emit('message:push', res.data.message, 'danger');
                         }
-                        vm.getCart();
+                        vm.$bus.$emit('cart:updateCart');
                         vm.isLoading = false;
                     })
                 }
             })
-        },
-        getCart() {
-            this.isLoading = true;
-            let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
-            let vm = this;
-            this.$http.get(api)
-            .then((res) => {
-                vm.cartData = res.data.data;
-                vm.isLoading = false;
-            })
-        },
+        }
     },
     created() {
       this.getCart();

@@ -1,5 +1,10 @@
 <template>
   <div class="p-4" :class="{'is-loading': isLoading}">
+    <div class="form-wizard">
+        <div class="form-wizard--step">1.確認購物車</div>
+        <div class="form-wizard--step">2.填寫訂單資訊</div>
+        <div class="form-wizard--step active">3.完成購買</div>
+    </div>    
     <loading :active.sync="isLoading" :is-full-page="false"></loading>
     <div class="row" v-if="orderData.total">
       <!-- 資料表單 -->
@@ -35,6 +40,9 @@
             <button type="button" class="btn btn-primary" @click="payOrder">
               <font-awesome-icon icon="wallet"/> 確認付款
             </button>
+          </li>
+          <li class="list-group-item text-right" v-else>
+            <router-link to="/" class="btn btn-secondary">回首頁</router-link>
           </li>          
           
         </ul>
