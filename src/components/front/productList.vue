@@ -14,12 +14,30 @@
                   <input type="checkbox" name="" :id="`category${index}`" :value="item" v-model="filter.category">{{item}}
                 </label>
               </div>
+              <div class="form-group">
+                <label for="">價格</label>
+                <label class="form-check pl-0" for="onsale">
+                  <input type="checkbox" name="" id="onsale" value="onSale" v-model="filter.onSale"> 特價中
+                </label>
+                <label class="form-check pl-0" for="0up">
+                  <input type="radio" name="filter_price" id="0up" :value="0" v-model="filter.price"> 價格不限
+                </label>
+                <label class="form-check pl-0" for="500low">
+                  <input type="radio" name="filter_price" id="500low" :value="500" v-model="filter.price"> 500元以下
+                </label>
+                <label class="form-check pl-0" for="300low">
+                  <input type="radio" name="filter_price" id="300low" :value="300" v-model="filter.price"> 300元以下
+                </label>
+                <label class="form-check pl-0" for="150low">
+                  <input type="radio" name="filter_price" id="150low" :value="150" v-model="filter.price"> 150元以下
+                </label>
+              </div>
               <button type="button" class="btn btn-secondary btn-block" @click="filterProducts">篩選</button>
           </div>
         </div>
         <div class="col-lg-10">
             <div class="sticky-top p-3 bg-white d-block d-lg-none">
-              <h4>條件搜尋</h4>
+              <h4 class="section-title"><font-awesome-icon icon="search"/> 條件搜尋</h4>
               <div class="form-row">
                 <div class="col-md-4 form-group">
                   <label for="">名稱</label>
@@ -28,8 +46,28 @@
                 <div class="col-md-4 form-group">
                   <label for="">類型</label>
                   <div class="form-inline">
-                    <label class="form-check mr-2" :for="`category${index}`" v-for="(item,index) in categoryTag" :key="item">
+                    <label class="form-check mr-4 pl-0" :for="`category${index}`" v-for="(item,index) in categoryTag" :key="item">
                       <input type="checkbox" name="" :id="`category${index}`" :value="item" v-model="filter.category">{{item}}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label for="">價格</label>
+                  <div class="form-inline">
+                    <label class="form-check mr-4 pl-0" for="onsale">
+                      <input type="checkbox" name="" id="onsale" value="onSale" v-model="filter.onSale"> 特價中
+                    </label>
+                    <label class="form-check mr-4 pl-0" for="0up">
+                      <input type="radio" name="filter_price" id="0up" :value="0" v-model="filter.price"> 價格不限
+                    </label>
+                    <label class="form-check mr-4 pl-0" for="500low">
+                      <input type="radio" name="filter_price" id="500low" :value="500" v-model="filter.price"> 500元以下
+                    </label>
+                    <label class="form-check mr-4 pl-0" for="300low">
+                      <input type="radio" name="filter_price" id="300low" :value="300" v-model="filter.price"> 300元以下
+                    </label>
+                    <label class="form-check mr-4 pl-0" for="150low">
+                      <input type="radio" name="filter_price" id="150low" :value="150" v-model="filter.price"> 150元以下
                     </label>
                   </div>
                 </div>
@@ -38,7 +76,7 @@
             </div>          
           <div class="product-list-wrapper" :class="{'is-loading':isLoading}">
             <loading :active.sync="isLoading"></loading>
-            <transition-group name="product-filter" tag="div" class="form-row">
+            <transition-group name="product-filter" tag="div" class="form-row" v-if="filteredProducts.length > 0">
               <div class="col-sm-6 col-lg-4 mb-3 product-filter" v-for="item in filteredProducts" :key="item.id">
                 <div class="product-wrapper" :style="`backgroundImage:url(${item.image})`" @click="clickProduct(item)">
                     <span class="product-tag">{{item.category}}</span>
@@ -60,8 +98,8 @@
                     </div>
                 </div>
               </div>
-              
-            </transition-group>            
+            </transition-group>
+            <h3 v-else>查無遊戲 (´_ゝ`)</h3>
           </div>
         </div>
       </div>
@@ -81,6 +119,8 @@ export default {
       filter:{
         title: "",
         category: [],
+        onSale: false,
+        price: 0,
       },
     }
   },
@@ -126,6 +166,21 @@ export default {
           })
         })
       }
+
+      //篩選特價
+      if(filterData.onSale){
+        vm.filteredProducts = vm.filteredProducts.filter((item)=>{
+          return item.origin_price !== item.price;
+        })
+      }
+
+      // 篩選價格
+      if(filterData.price > 0){
+        vm.filteredProducts = vm.filteredProducts.filter((item)=>{
+          return filterData.price > item.price;
+        })
+      }
+
     },
     clickProduct(product){
       if(product.is_enabled){
@@ -146,6 +201,7 @@ export default {
   },
   created() {
     this.getProducts();
+    this.filter.onSale = (this.$route.query.onSale);
   },
 }
 </script>

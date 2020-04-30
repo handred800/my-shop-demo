@@ -15,7 +15,7 @@
                 <div class="swiper-pagination" slot="pagination"></div>
             </swiper>
           </div>
-          <div class="color-block color-block-secondary">
+          <div class="color-block color-block-secondary" @click="routerToSale">
             <h2 class="block-title text-right">本周<br>折扣</h2>
             <div class="block-backdrop">weekly discount</div>
           </div>
@@ -127,7 +127,10 @@ export default {
           $copyInput.value = '';
           $copyInput.blur();
           this.$bus.$emit('message:push', '已複製折扣碼！', 'success');
-      }    
+      },
+      routerToSale(){
+          this.$router.push({ path: 'games', query: { onSale: true }})
+      }
   },
   
 }
