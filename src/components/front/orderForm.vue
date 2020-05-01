@@ -91,6 +91,16 @@ export default {
         }
     },
     methods: {
+        getOrder(){
+          this.isLoading = true;
+          let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order/${this.orderId}`;
+          let vm = this;
+          this.$http.get(api)
+          .then((res)=>{
+            vm.orderData = res.data.order;
+            vm.isLoading = false;
+          })
+        },      
         createOrder() {
             let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order`;
             let vm = this;
