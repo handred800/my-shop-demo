@@ -112,7 +112,7 @@ export default {
   data() {
     return {
       categoryTag: [],
-      // pagination: {},
+      
       products: [],
       filteredProducts: [],
       isLoading: false,

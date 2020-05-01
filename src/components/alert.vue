@@ -1,14 +1,17 @@
 <template>
-  <div class="message-alert">
-    <div class="alert alert-dismissible"
-      :class="`alert-${item.status}`"
+  <transition-group name="message-toast" class="message-toast-wrapper" tag="div">
+    <div class="message-toast"
+      :class="messageStatus(item.status)"
       v-for="(item, index) in messages" :key="index">
+      <font-awesome-icon icon="check-circle" v-if="item.status === 'success'"/>
+      <font-awesome-icon icon="times-circle" v-else-if="item.status === 'danger'"/>
+      <font-awesome-icon icon="info-circle" v-else/>
       {{ item.message }}
-      <button type="button" class="close" @click="removeMessage(inddex)" aria-label="Close">
+      <!-- <button type="button" class="close" @click="removeMessage(index)" aria-label="Close">
         <span aria-hidden="true">&times;</span>
-      </button>
+      </button> -->
     </div>
-  </div>
+  </transition-group>
 </template>
 
 <script>
@@ -29,9 +32,9 @@ export default {
       });
       this.removeMessageWithTiming(timestamp);
     },
-    removeMessage(num) {
-      this.messages.splice(num, 1);
-    },
+    // removeMessage(num) {
+    //   this.messages.splice(num, 1);
+    // },
     removeMessageWithTiming(timestamp) {
       const vm = this;
       setTimeout(() => {
@@ -42,6 +45,19 @@ export default {
         });
       }, 3000);
     },
+    messageStatus(status){
+      switch(status){
+        case 'success':
+          return 'text-primary';
+        case 'danger':
+          return 'text-danger';
+        default:
+          return 'text-dark'
+      }
+    }    
+  },
+  computed: {
+
   },
   created() {
     const vm = this;
@@ -55,13 +71,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scope>
-.message-alert {
-  position: fixed;
-  max-width: 40%;
-  top: 70px;
-  right: 20px;
-  z-index: 1100;
-}
-</style>
