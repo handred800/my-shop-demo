@@ -11,9 +11,11 @@
 
 <script>
 export default {
-  name: 'dateInput',
-  props:{
-    value: 0 //timestamp
+  props: {
+    value: {
+      type: Number,
+      default: 0,
+    }, // timestamp
   },
   data() {
     return {
@@ -23,20 +25,20 @@ export default {
   methods: {
     dateToYYYYMMDD(timestamp) {
       // props.value 從 timestamp 轉 日期string(用於顯示)
-      let date = new Date(timestamp*1000);
-      return date && date.toISOString().split('T')[0]
+      const date = new Date(timestamp * 1000);
+      return date && date.toISOString().split('T')[0];
     },
-    updateValue: function (target) {
+    updateValue(target) {
       // input監聽 向外部(v-model)送timestamp
-      let timestamp = target.valueAsDate.getTime() / 1000
+      const timestamp = target.valueAsDate.getTime() / 1000;
       this.$emit('input', timestamp);
     },
-    selectAll: function (event) {
-      //for Safari bug
-      setTimeout(function () {
-      	event.target.select()
-      }, 0)
-    }
+    selectAll(event) {
+      // for Safari bug
+      setTimeout(() => {
+        event.target.select();
+      }, 0);
+    },
   },
 };
 </script>

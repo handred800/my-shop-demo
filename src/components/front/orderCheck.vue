@@ -23,9 +23,11 @@
                                 <div class="media">
                                     <img class="mr-3" :src="item.product.image" :alt="item.product.title" style="max-width:150px">
                                     <div class="media-body">
-                                        <router-link :to="`/games/${item.product.id}`" class="h5 font-weight-bold mb-0 d-block">{{item.product.title}}</router-link>
+                                        <router-link
+                                        :to="`/games/${item.product.id}`"
+                                        class="h5 font-weight-bold mb-0 d-block">{{item.product.title}}</router-link>
                                         <div class="text-secondary" v-if="item.coupon">{{item.coupon.title}}</div>
-                                        <small class="text-muted">${{item.product.price | moneyFilter}} X {{item.qty}}</small>                                             
+                                        <small class="text-muted">${{item.product.price | moneyFilter}} X {{item.qty}}</small>
                                     </div>
                                 </div>
                             </td>
@@ -33,7 +35,7 @@
                                 <strong class="mr-3" :class="{'text-primary':item.coupon}">${{item.final_total | moneyFilter}}</strong>
                                 <a href="#" title="移除" class="text-muted" @click.prevent="delFormCart(item.id)">
                                     <font-awesome-icon icon="times"/>
-                                </a>                                            
+                                </a>
                             </td>
                         </tr>
                     </tbody>
@@ -45,7 +47,7 @@
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-secondary" @click="applyCoupon">使用招待券</button>
                                 </div>
-                                </div>                              
+                                </div>
                             </td>
                             <td class="text-right">
                                 <strong>總計：${{cartData.total | moneyFilter}}</strong>
@@ -58,12 +60,12 @@
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-secondary" @click="applyCoupon">使用招待券</button>
                                 </div>
-                                </div>                              
-                            </td>                          
+                                </div>
+                            </td>
                             <td class="text-right">
                                 <strong class="text-primary">優惠價：${{cartData.final_total | moneyFilter}}</strong>
                             </td>
-                        </tr>                                    
+                        </tr>
                     </tfoot>
                 </table>
                 <div class="text-right px-2">
@@ -88,74 +90,71 @@
 </template>
 
 <script>
-import $ from "jquery";
-
 export default {
-    data() {
-        return {
-            coupon_code: '',
-            cartData: {
-                carts:[],
-                final_total: 0,
-                total: 0,
-            },
-            isLoading: false
-        }
+  data() {
+    return {
+      coupon_code: '',
+      cartData: {
+        carts: [],
+        final_total: 0,
+        total: 0,
+      },
+      isLoading: false,
+    };
+  },
+  methods: {
+    delFormCart(id) {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart/${id}`;
+      const vm = this;
+      this.$http.delete(api)
+        .then((res) => {
+          vm.$bus.$emit('message:push', res.data.message, 'success');
+          vm.getCart();
+        });
     },
-    methods: {
-        delFormCart(id) {
-            let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart/${id}`;
-            let vm = this;
-            this.$http.delete(api)
-            .then((res) => {
-                vm.$bus.$emit('message:push', res.data.message, 'success');
-                vm.getCart();
-            })
-        },
-        applyCoupon() {
-            this.isLoading = true;
-            let code = {
-                "code": this.coupon_code
-            }
-            let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/coupon`;
-            let vm = this;
-            this.$http.post(api, {
-                data: code
-            })
-            .then((res) => {
-                if (res.data.success) {
-                    vm.$bus.$emit('message:push', res.data.message, 'success');
-                } else {
-                    vm.$bus.$emit('message:push', res.data.message, 'danger');
-                }
-                vm.coupon_code = "";
-                vm.getCart();
-                vm.isLoading = false;
-            })
-        },        
-        getCart() {
-            this.isLoading = true;
-            let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
-            let vm = this;
-            this.$http.get(api)
-            .then((res) => {
-                console.log(res.data.data)
-                vm.cartData = res.data.data;
-                vm.isLoading = false;
-            })
-        },
-        copyToClipboard(){
-            let $copyInput = document.getElementById('copy');
-            $copyInput.value = '90%awesome';
-            $copyInput.select();
-            document.execCommand('copy');
-            $copyInput.value = '';
-            $copyInput.blur();
-            this.$bus.$emit('message:push', '已複製折扣碼！', 'success');
-        }
+    applyCoupon() {
+      this.isLoading = true;
+      const code = {
+        code: this.coupon_code,
+      };
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/coupon`;
+      const vm = this;
+      this.$http.post(api, {
+        data: code,
+      })
+        .then((res) => {
+          if (res.data.success) {
+            vm.$bus.$emit('message:push', res.data.message, 'success');
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger');
+          }
+          vm.coupon_code = '';
+          vm.getCart();
+          vm.isLoading = false;
+        });
     },
-    created() {
-        this.getCart();
+    getCart() {
+      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
+      const vm = this;
+      this.$http.get(api)
+        .then((res) => {
+          vm.cartData = res.data.data;
+          vm.isLoading = false;
+        });
     },
-}
+    copyToClipboard() {
+      const $copyInput = document.getElementById('copy');
+      $copyInput.value = '90%awesome';
+      $copyInput.select();
+      document.execCommand('copy');
+      $copyInput.value = '';
+      $copyInput.blur();
+      this.$bus.$emit('message:push', '已複製折扣碼！', 'success');
+    },
+  },
+  created() {
+    this.getCart();
+  },
+};
 </script>

@@ -23,7 +23,7 @@
             優惠券管理
           </router-link>
         </li>
-      </ul>     
+      </ul>
     </div>
   </nav>
 </template>
@@ -31,7 +31,12 @@
 <script>
 export default {
   name: 'sidebar',
-}
+  data() {
+    return {
+
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

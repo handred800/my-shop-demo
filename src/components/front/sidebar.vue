@@ -22,7 +22,7 @@
           <router-link to="/admin/coupon_list" active-class="active" class="nav-link">
             優惠券管理
           </router-link>
-        </li>        
+        </li>
       </ul>
       <h6 class="text-muted px-3 mt-3">模擬功能</h6>
       <ul class="nav flex-column">
@@ -31,7 +31,7 @@
             模擬購物
           </router-link>
         </li>
-      </ul>      
+      </ul>
     </div>
   </nav>
 </template>
@@ -39,7 +39,7 @@
 <script>
 export default {
   name: 'sidebar',
-}
+};
 </script>
 
 <style lang="scss" scoped>

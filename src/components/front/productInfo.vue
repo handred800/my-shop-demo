@@ -4,7 +4,6 @@
             <div class="product-info-wrapper">
                 <loading :active.sync="isLoading" :is-full-page="false"></loading>
                 <video class="product-bg-video" :src="product.content" :muted="!isWatching" :controls="isWatching" autoplay loop></video>
-                
                 <!-- 產品資訊面板 -->
                 <div class="product-info-panel" :class="{'is-watching':isWatching}">
                     <div class="scroller-wrapper">
@@ -13,7 +12,7 @@
                         <p class="description-wrapper">{{product.description}}</p>
                         <h3 v-if="product.price === product.origin_price">售價${{product.price | moneyFilter}}</h3>
                         <h3 v-else>
-                            <span class="text-primary mr-1">優惠${{product.price | moneyFilter}}</span> 
+                            <span class="text-primary mr-1">優惠${{product.price | moneyFilter}}</span>
                             <small><s class="text-muted">${{product.origin_price | moneyFilter}}</s></small>
                         </h3>
                         <div class="form-group">
@@ -31,46 +30,45 @@
                 </div>
             </div>
         </section>
-        
         <h2 class="section-title pl-4">相同類型</h2>
         <product-swiper :filter="product" @productSwiperClick="getProduct"></product-swiper>
     </div>
 </template>
 <script>
-import ProductSwiper from "@/components/front/productSwiper";
-    export default {
-        data() {
-            return {
-                product:{},
-                isLoading: false,
-                isWatching: false,
-                qty: 1,
-            }
-        },
-        components:{
-            ProductSwiper
-        },
-        methods: {
-            getProduct(){
-                this.isWatching = false;
-                this.isLoading = true;
-                let id = this.$route.params.gameId;
-                let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/product/${id}`;
-                let vm = this;
-                this.$http.get(api)
-                .then((res)=>{
-                    console.log(res.data)
-                    vm.product = res.data.product;
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                    vm.isLoading = false;
-                })
-            },
-            addToCart(){
-                this.$bus.$emit('cart:addToCart', this.product.id, this.qty);
-            }
-        },
-        created(){
-            this.getProduct();
-        }
-    }
+import ProductSwiper from '@/components/front/ProductSwiper.vue';
+
+export default {
+  data() {
+    return {
+      product: {},
+      isLoading: false,
+      isWatching: false,
+      qty: 1,
+    };
+  },
+  components: {
+    ProductSwiper,
+  },
+  methods: {
+    getProduct() {
+      this.isWatching = false;
+      this.isLoading = true;
+      const id = this.$route.params.gameId;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/product/${id}`;
+      const vm = this;
+      vm.$http.get(api)
+        .then((res) => {
+          vm.product = res.data.product;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          vm.isLoading = false;
+        });
+    },
+    addToCart() {
+      this.$bus.$emit('cart:addToCart', this.product.id, this.qty);
+    },
+  },
+  created() {
+    this.getProduct();
+  },
+};
 </script>

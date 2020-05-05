@@ -2,21 +2,18 @@
   <transition-group name="message-toast" class="message-toast-wrapper" tag="div">
     <div class="message-toast"
       :class="messageStatus(item.status)"
-      v-for="(item, index) in messages" :key="index">
+      v-for="(item, index) in messages"
+      :key="index">
       <font-awesome-icon icon="check-circle" v-if="item.status === 'success'"/>
       <font-awesome-icon icon="times-circle" v-else-if="item.status === 'danger'"/>
       <font-awesome-icon icon="info-circle" v-else/>
-      {{ item.message }}
-      <!-- <button type="button" class="close" @click="removeMessage(index)" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button> -->
+      {{item.message}}
     </div>
   </transition-group>
 </template>
 
 <script>
 export default {
-  name: 'Alert',
   data() {
     return {
       messages: [],
@@ -32,9 +29,6 @@ export default {
       });
       this.removeMessageWithTiming(timestamp);
     },
-    // removeMessage(num) {
-    //   this.messages.splice(num, 1);
-    // },
     removeMessageWithTiming(timestamp) {
       const vm = this;
       setTimeout(() => {
@@ -45,26 +39,20 @@ export default {
         });
       }, 3000);
     },
-    messageStatus(status){
-      switch(status){
+    messageStatus(status) {
+      switch (status) {
         case 'success':
           return 'text-primary';
         case 'danger':
           return 'text-danger';
         default:
-          return 'text-dark'
+          return 'text-dark';
       }
-    }    
-  },
-  computed: {
-
+    },
   },
   created() {
     const vm = this;
 
-    // 自定義名稱 'messsage:push'
-    // message: 傳入參數
-    // status: 樣式，預設值為 warning
     vm.$bus.$on('message:push', (message, status = 'warning') => {
       vm.updateMessage(message, status);
     });

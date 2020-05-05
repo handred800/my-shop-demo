@@ -1,6 +1,6 @@
 <template>
     <div>
-      <loading :active.sync="isLoading"></loading>      
+      <loading :active.sync="isLoading"></loading>
       <table class="table mt-3">
         <thead class="bg-light">
           <tr>
@@ -8,7 +8,7 @@
             <th>訂單明細</th>
             <th width="100">應付金額</th>
             <th width="100">狀態</th>
-            <th></th>                      
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -16,7 +16,8 @@
             <td>{{order.create_at | timeFilter}}</td>
             <td>
               <ul class="list-unstyled">
-                <li v-for="product in order.products" :key="product.id">{{product.product.title}} x {{product.qty}}</li>
+                <li v-for="product in order.products"
+                :key="product.id">{{product.product.title}} x {{product.qty}}</li>
               </ul>
             </td>
             <td>{{order.total | moneyFilter}}</td>
@@ -31,11 +32,11 @@
         </tbody>
       </table>
 
-      <pagination :pagination="pagination" @page-switch="getOrders"></pagination>  
-      
+      <pagination :pagination="pagination" @page-switch="getOrders"></pagination>
+
       <!-- 商品彈窗 -->
-      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" >
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">訂單內容</h5>
@@ -99,24 +100,22 @@
                 <div class="form-group">
                   <label for="">地址</label>
                   <p>{{tempOrder.user.address}}</p>
-                </div>                        
+                </div>
                 <div class="form-group">
                   <label for="">備註</label>
                   <p>{{tempOrder.message}}</p>
                 </div>
-                
-                
               </div>
             </form>
           </div>
         </div>
-      </div>  
+      </div>
     </div>
 </template>
 
 <script>
-import $ from "jquery";
-import Pagination from '@/components/pagination.vue';
+import $ from 'jquery';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   data() {
@@ -124,31 +123,29 @@ export default {
       pagination: {},
       tempOrder: {},
       orders: [],
-      isLoading: false
-    }
+      isLoading: false,
+    };
   },
-  components:{Pagination},
+  components: { Pagination },
   methods: {
-    getOrders(page = this.pagination.current_page){
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/orders?page=${page}`;
-      let vm = this;
+    getOrders(page = this.pagination.current_page) {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/orders?page=${page}`;
+      const vm = this;
       this.isLoading = true;
       this.$http.get(api)
-      .then((res)=>{
-        console.log(res)
-        vm.orders = res.data.orders;
-        vm.pagination = res.data.pagination;
-        vm.isLoading = false;
-      })
+        .then((res) => {
+          vm.orders = res.data.orders;
+          vm.pagination = res.data.pagination;
+          vm.isLoading = false;
+        });
     },
-    openModal(item){
-      this.tempOrder = Object.assign({},item);
-      console.log(this.tempOrder,$('#orderModal'))
+    openModal(item) {
+      this.tempOrder = { ...item };
       $('#orderModal').modal('show');
-    }
+    },
   },
   created() {
-    this.getOrders(1)
+    this.getOrders(1);
   },
-}
+};
 </script>

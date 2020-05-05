@@ -20,16 +20,16 @@
 
 <script>
 export default {
-    props:['pagination'],
-    data() {
-        return {
-            // pageData: this.pagination
-        }
+  props: ['pagination'],
+  data() {
+    return {
+      // pageData: this.pagination
+    };
+  },
+  methods: {
+    changePage(page) {
+      this.$emit('page-switch', page);
     },
-    methods: {
-        changePage(page){
-            this.$emit('page-switch',page);
-        }
-    },
-}
+  },
+};
 </script>

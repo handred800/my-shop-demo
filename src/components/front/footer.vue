@@ -14,9 +14,18 @@
                             <button class="btn btn-light">訂閱</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </footer>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+
+    };
+  },
+};
+</script>
