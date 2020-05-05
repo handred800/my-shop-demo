@@ -8,13 +8,21 @@
     user-select: none;
     min-height: 160px;
 
-    .block-title {
+    .block-content {
         position: relative;
-        color: #fff;
-        font-size: 2.5em;
         z-index: 999;
         @include transition(.7s);
         transform: translateX(0);
+
+        .block-title {
+            color: #fff;
+            font-size: 2.5em;
+            margin-bottom: 0;
+        }
+        .block-subtitle{
+            color: #fff;
+            font-size: 1.2rem;
+        }
     }
 
     .block-backdrop {
@@ -29,7 +37,7 @@
     }
 
     &:hover {
-        .block-title {
+        .block-content {
             transform: translateX(-1%);
         }
 

@@ -6,7 +6,9 @@
 
     .btn-cart,.btn-top {
         margin-top: .5rem;
-        padding: .6rem 1rem;
+        padding: .5rem;
+        width: 55px;
+        height: 55px;
         font-size: 1.5rem;
         @include transition(.15s);
         transform: scale(1);

@@ -14,13 +14,12 @@ body {
 }
 
 section {
-    // margin: 1rem 0;
     padding: 1.5rem 0;
 }
 
 .form-inline .form-check{
     width: auto;
-} // custom start
+}
 
 // common utilities
 .main-wrapper {
@@ -32,18 +31,7 @@ section {
     border-radius: $radius;
     box-shadow: $shadow;
     z-index: 99;
-
-    &::before {
-        content: '';
-        display: block;
-        position: fixed;
-        top: 30%;
-        left: 60%;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        background-color: lighten($primary-color, 15%);
-    }
+    overflow: hidden;
 }
 
 // loading placeholder (全頁)

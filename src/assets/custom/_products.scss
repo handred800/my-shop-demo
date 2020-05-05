@@ -8,6 +8,20 @@
     cursor: pointer;
     transform: scale(1);
     opacity: 1;
+    &.product-disabled{
+        filter: grayscale(100%);
+        opacity: .6;
+        &::before{
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(black,.3);
+        }
+    }
 
     .product-content {
         position: absolute;

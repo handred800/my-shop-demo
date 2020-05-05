@@ -75,7 +75,7 @@
     }
 }
 
-.loading-holder{
+.loading-holder {
     background-color: #dddddd;
     padding-bottom: 150px;
 }
@@ -89,5 +89,12 @@
 .swiper-button-next {
     color: $primary-color;
     font-weight: bold;
-    // background-color: $primary-color;
+    background-color: #fff;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    padding: .4rem 1.4rem;
+    box-shadow: $shadow;
+    &::before,&::after{
+        content: '';
+    }
 }
