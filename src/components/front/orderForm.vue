@@ -57,7 +57,7 @@
                 <small class="invalid-feedback">請填寫地址</small>
               </div>
               <div class="form-group">
-                <label for="message">備註<span class="text-primary">此欄位非必填</span></label>
+                <label for="message">備註 <small class="text-primary">此欄位非必填</small></label>
                 <textarea id="message" class="form-control" v-model="form.message" cols="30" rows="6"></textarea>
               </div>
               <div class="text-right">
