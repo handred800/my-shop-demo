@@ -80,7 +80,10 @@
             </div>
             <div class="col-md-4">
             <div class="color-block color-block-secondary" @click="copyToClipboard">
-                <h2 class="block-title text-right">超級<br>招待券</h2>
+                <div class="block-content text-right">
+                  <h2 class="block-title">超級招待券</h2>
+                  <span class="block-subtitle">點擊領取9折招待券</span>
+                </div>
                 <div class="block-backdrop">weekly discount</div>
             </div>
             </div>
