@@ -4,7 +4,7 @@
         <div class="form-wizard--step">1.確認購物車</div>
         <div class="form-wizard--step">2.填寫訂單資訊</div>
         <div class="form-wizard--step active">3.完成購買</div>
-    </div>    
+    </div>
     <loading :active.sync="isLoading" :is-full-page="false"></loading>
     <div class="row" v-if="orderData.total">
       <!-- 資料表單 -->
@@ -43,11 +43,8 @@
           </li>
           <li class="list-group-item text-right" v-else>
             <router-link to="/" class="btn btn-secondary">回首頁</router-link>
-          </li>          
-          
+          </li>
         </ul>
-
-
       </div>
 
       <!-- 購物車 -->
@@ -59,9 +56,9 @@
               <div class="flex-shrink-1">
                 <h5 class="font-weight-bold mb-0">{{item.product.title}}</h5>
                 <div class="text-secondary" v-if="item.coupon">{{item.coupon.title}}</div>
-                <small class="text-muted">{{item.product.price | moneyFilter}} X {{item.qty}}</small>  
+                <small class="text-muted">{{item.product.price | moneyFilter}} X {{item.qty}}</small>
               </div>
-              <div class="text-nowrap"> 
+              <div class="text-nowrap">
                 <strong class="mr-3" :class="{'text-primary':item.coupon}">${{item.final_total | moneyFilter}}</strong>
               </div>
             </li>
@@ -76,51 +73,49 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       isLoading: false,
       orderId: '',
-      orderData: {}
-    }
+      orderData: {},
+    };
   },
   methods: {
-    getOrder(){
+    getOrder() {
       this.isLoading = true;
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order/${this.orderId}`;
-      let vm = this;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order/${this.orderId}`;
+      const vm = this;
       this.$http.get(api)
-      .then((res)=>{
-        vm.orderData = res.data.order;
-        vm.isLoading = false;
-      })
-    },
-    payOrder(){
-      this.isLoading = true;
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/pay/${this.orderId}`;
-      let vm = this;
-      this.$http.post(api)
-      .then((res)=>{
-        if(res.data.success){
-          console.log(res.data)
+        .then((res) => {
+          vm.orderData = res.data.order;
           vm.isLoading = false;
-          vm.$bus.$emit('message:push',res.data.message,'success');
-          vm.getOrder();
-        }else{
-          vm.$bus.$emit('message:push',res.data.message,'danger');
-        }
-      })
-    }
+        });
+    },
+    payOrder() {
+      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/pay/${this.orderId}`;
+      const vm = this;
+      this.$http.post(api)
+        .then((res) => {
+          if (res.data.success) {
+            vm.isLoading = false;
+            vm.$bus.$emit('message:push', res.data.message, 'success');
+            vm.getOrder();
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger');
+          }
+        });
+    },
   },
   created() {
     this.orderId = this.$route.params.orderId;
-    this.getOrder()
+    this.getOrder();
   },
-}
+};
 </script>
 <style lang="scss" scoped>
   .list-group p{
-    margin-bottom: 0;  
+    margin-bottom: 0;
   }
 </style>

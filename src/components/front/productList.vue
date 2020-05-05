@@ -10,8 +10,14 @@
               </div>
               <div class="form-group">
                 <label for="">類型</label>
-                <label class="form-check pl-0" :for="`category${index}`" v-for="(item,index) in categoryTag" :key="item">
-                  <input type="checkbox" name="" :id="`category${index}`" :value="item" v-model="filter.category">{{item}}
+                <label class="form-check pl-0"
+                :for="`category${index}`"
+                v-for="(item,index) in categoryTag"
+                :key="item">
+                  <input type="checkbox" name=""
+                  :id="`category${index}`"
+                  :value="item"
+                  v-model="filter.category">{{item}}
                 </label>
               </div>
               <div class="form-group">
@@ -46,8 +52,15 @@
                 <div class="col-md-4 form-group">
                   <label for="">類型</label>
                   <div class="form-inline">
-                    <label class="form-check mr-4 pl-0" :for="`category${index}`" v-for="(item,index) in categoryTag" :key="item">
-                      <input type="checkbox" name="" :id="`category${index}`" :value="item" v-model="filter.category">{{item}}
+                    <label class="form-check mr-4 pl-0"
+                    :for="`category${index}`"
+                    v-for="(item,index) in categoryTag"
+                    :key="item">
+                      <input type="checkbox"
+                       :id="`category${index}`"
+                       :value="item"
+                       v-model="filter.category">
+                       {{item}}
                     </label>
                   </div>
                 </div>
@@ -73,7 +86,7 @@
                 </div>
                 <button type="button" class="btn btn-secondary btn-block" @click="filterProducts">篩選</button>
               </div>
-            </div>          
+            </div>
           <div class="product-list-wrapper" :class="{'is-loading':isLoading}">
             <loading :active.sync="isLoading"></loading>
             <transition-group name="product-filter" tag="div" class="form-row" v-if="filteredProducts.length > 0">
@@ -85,12 +98,15 @@
                             <h5 class="product-title">{{item.title}}</h5>
                             <span v-if="item.price === item.origin_price">${{item.price | moneyFilter}}</span>
                             <span v-else>
-                                <span class="text-primary mr-1">${{item.price | moneyFilter}}</span> 
+                                <span class="text-primary mr-1">${{item.price | moneyFilter}}</span>
                                 <small><s class="text-muted">${{item.origin_price | moneyFilter}}</s></small>
                             </span>
                         </div>
                         <div>
-                            <button v-if="item.is_enabled" type="button" class="btn btn-outline-primary" @click.stop="quickAddToCart(item.id)">
+                            <button v-if="item.is_enabled"
+                            type="button"
+                            class="btn btn-outline-primary"
+                            @click.stop="quickAddToCart(item.id)">
                                 <font-awesome-icon icon="shopping-cart"/>
                             </button>
                             <button v-else class="btn btn-outline-light">缺貨中</button>
@@ -107,103 +123,83 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       categoryTag: [],
-      
       products: [],
       filteredProducts: [],
       isLoading: false,
-      filter:{
-        title: "",
+      filter: {
+        title: '',
         category: [],
         onSale: false,
         price: 0,
       },
-    }
+    };
   },
   methods: {
-    getProducts(){
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/products/all`;
-      let vm = this;
-      this.isLoading = true;
-      this.$http.get(api)
-      .then((res)=>{
-        vm.products = res.data.products;
-
-        // 重組分類陣列
-        let categories = res.data.products.map(item=>{
-          return item.category;
-        })
-        // 提取不重複的標籤
-        vm.categoryTag = categories.filter((item,index,array)=>{
-            return array.indexOf(item) === index
-        })
-
-        this.filterProducts();
-        vm.isLoading = false;
-      })
+    getProducts() {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/products/all`;
+      const vm = this;
+      vm.isLoading = true;
+      vm.$http.get(api)
+        .then((res) => {
+          vm.products = res.data.products;
+          // 重組分類陣列
+          const categories = res.data.products.map((item) => item.category);
+          // 提取不重複的標籤
+          vm.categoryTag = categories.filter((item, index, array) => array.indexOf(item) === index);
+          vm.filterProducts();
+          vm.isLoading = false;
+        });
     },
-    filterProducts(){
-      let vm = this;
-      let filterData = vm.filter;
+    filterProducts() {
+      const vm = this;
+      const filterData = vm.filter;
       vm.filteredProducts = vm.products;
 
       // 篩選名字
-      if(filterData.title !== ""){
-        vm.filteredProducts = vm.filteredProducts.filter((item)=>{
-          return item.title.toLowerCase().includes(filterData.title.toLowerCase());
-        })
+      if (filterData.title !== '') {
+        vm.filteredProducts = vm.filteredProducts.filter((item) => item.title.toLowerCase().includes(filterData.title.toLowerCase()));
       }
 
       // 篩選分類
-      if(filterData.category.length > 0){
-        vm.filteredProducts = vm.filteredProducts.filter((item)=>{
-          return filterData.category.some((categoryTag)=>{
-            return categoryTag === item.category;
-          })
-        })
+      if (filterData.category.length > 0) {
+        vm.filteredProducts = vm.filteredProducts.filter((item) => filterData.category.some((categoryTag) => categoryTag === item.category));
       }
 
-      //篩選特價
-      if(filterData.onSale){
-        vm.filteredProducts = vm.filteredProducts.filter((item)=>{
-          return item.origin_price !== item.price;
-        })
+      // 篩選特價
+      if (filterData.onSale) {
+        vm.filteredProducts = vm.filteredProducts.filter((item) => item.origin_price !== item.price);
       }
 
       // 篩選價格
-      if(filterData.price > 0){
-        vm.filteredProducts = vm.filteredProducts.filter((item)=>{
-          return filterData.price > item.price;
-        })
+      if (filterData.price > 0) {
+        vm.filteredProducts = vm.filteredProducts.filter((item) => filterData.price > item.price);
       }
-
     },
-    clickProduct(product){
-      if(product.is_enabled){
+    clickProduct(product) {
+      if (product.is_enabled) {
         this.$router.push(`/games/${product.id}`);
-      }else{
+      } else {
         this.$bus.$emit('message:push', '商品缺貨中');
       }
-      
     },
-    quickAddToCart(productId){
-      this.$bus.$emit('cart:addToCart',productId);
-    }
+    quickAddToCart(productId) {
+      this.$bus.$emit('cart:addToCart', productId);
+    },
   },
-  filters:{
-    textSummary(text){
-      return text.substring(0,60) + '...';
-    }
+  filters: {
+    textSummary(text) {
+      return `${text.substring(0, 60)}...`;
+    },
   },
   created() {
     this.getProducts();
     this.filter.onSale = (this.$route.query.onSale);
   },
-}
+};
 </script>
 <style lang="scss" scoped>
   .card-img-wrapper{

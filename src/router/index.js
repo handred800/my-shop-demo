@@ -1,109 +1,89 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import Front from '../views/Front.vue'
-import Admin from '../views/Admin.vue'
-import Login from '../views/Login.vue'
-// front
-import Home from '../components/front/home.vue'
-import GameList from "../components/front/productList.vue";
-import GameInfo from "../components/front/productInfo.vue";
-import OrderCheck from "../components/front/orderCheck.vue";
-import OrderForm from "../components/front/orderForm.vue";
-import OrderDetail from "../components/front/orderDetail.vue";
-import ColumnPage from "../components/front/columnPage.vue";
+Vue.use(VueRouter);
 
-// admin
-import ProductList from '../components/admin/productList.vue'
-import OrderList from '../components/admin/orderList.vue'
-import CouponList from "../components/admin/couponList.vue";
-
-
-Vue.use(VueRouter)
-
-  const routes = [
+const routes = [
   {
     path: '*',
-      redirect: 'Home'
+    redirect: 'Home',
   },
   {
     path: '/admin',
     name: 'Admin',
-    component: Admin,
-    children:[
+    component: () => import('@/views/Admin.vue'),
+    children: [
       {
         path: 'product_list',
         name: 'ProductList',
-        component: ProductList,
+        component: () => import('@/components/admin/ProductList.vue'),
         meta: { requiresAuth: true },
       },
       {
         path: 'order_list',
         name: 'OrderList',
-        component: OrderList,
+        component: () => import('@/components/admin/OrderList.vue'),
         meta: { requiresAuth: true },
       },
       {
         path: 'coupon_list',
         name: 'CouponList',
-        component: CouponList,
+        component: () => import('@/components/admin/CouponList.vue'),
         meta: { requiresAuth: true },
-      }      
-    ]
+      },
+    ],
   },
   {
     path: '/',
     name: 'Front',
-    component: Front,
+    component: () => import('@/views/Front.vue'),
     children: [
       {
         path: '',
         name: 'Home',
-        component: Home,
+        component: () => import('@/components/front/Home.vue'),
       },
       {
         path: 'games',
         name: 'GameList',
-        component: GameList,
+        component: () => import('@/components/front/ProductList.vue'),
       },
       {
         path: 'games/:gameId',
         name: 'GameInfo',
-        component: GameInfo,
+        component: () => import('@/components/front/ProductInfo.vue'),
       },
       {
         path: 'order_check',
         name: 'OrderCheck',
-        component: OrderCheck,
+        component: () => import('@/components/front/OrderCheck.vue'),
       },
       {
         path: 'order_form',
         name: 'OrderForm',
-        component: OrderForm,
+        component: () => import('@/components/front/OrderForm.vue'),
       },
       {
         path: 'order_detail/:orderId',
         name: 'OrderDetail',
-        component: OrderDetail,
+        component: () => import('@/components/front/OrderDetail.vue'),
       },
       {
         path: 'column',
         name: 'ColumnPage',
-        component: ColumnPage,
-      },      
-      
-
-    ]
-  },  
+        component: () => import('@/components/front/ColumnPage.vue'),
+      },
+    ],
+  },
   {
     path: '/login',
     name: 'Login',
-    component: Login
-  }
-]
+    component: () => import('@/views/Login.vue'),
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

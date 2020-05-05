@@ -15,17 +15,25 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Navbar from '@/components/front/navbar.vue'
-import FooterSection from '@/components/front/footer.vue'
-import Cart from "@/components/front/cart.vue";
+import Navbar from '@/components/front/Navbar.vue';
+import FooterSection from '@/components/front/Footer.vue';
+import Cart from '@/components/front/Cart.vue';
 
-export default{
-  components:{Navbar,FooterSection,Cart},
-  methods: {
-    scrollToTop(){
-      window.scrollTo({top: 0, behavior: 'smooth'});
-    }
+export default {
+  data() {
+    return {
+
+    };
   },
-}
+  components: {
+    Navbar,
+    FooterSection,
+    Cart,
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+  },
+};
 </script>

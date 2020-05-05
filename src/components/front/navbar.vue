@@ -17,20 +17,26 @@
             </li>
             <li class="nav-item">
               <router-link to="/login" class="nav-link">管理員登入</router-link>
-            </li>            
+            </li>
           </ul>
         <!-- <div class="collapse navbar-collapse" id="menu">
-          
+
         </div> -->
       </div>
     </nav>
 </template>
 
 <script>
-import $ from "jquery";
-export default{
+import $ from 'jquery';
+
+export default {
+  data() {
+    return {
+
+    };
+  },
   created() {
     $('#menu').collapse('show');
   },
-}
+};
 </script>

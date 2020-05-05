@@ -6,13 +6,14 @@
 </template>
 
 <script>
-import Alert from '@/components/alert.vue'
+import Alert from '@/components/Alert.vue';
+
 export default {
   name: 'app',
-  components:{Alert}
-}
+  components: { Alert },
+};
 </script>
 
 <style lang="scss">
-  @import "./assets/all.scss"
+  @import "./assets/all.scss";
 </style>

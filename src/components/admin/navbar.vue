@@ -20,19 +20,18 @@
 export default {
   name: 'navbar',
   methods: {
-    logout(){
-      let vm = this
+    logout() {
+      const vm = this;
       const api = `${process.env.VUE_APP_API}/logout`;
       this.$http.post(api)
-      .then((res)=>{
-        // console.log(res)
-        if(res.data.success){
-          vm.$router.push('/login')
-        }
-      })
-    }
-  },  
-}
+        .then((res) => {
+          if (res.data.success) {
+            vm.$router.push('/login');
+          }
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

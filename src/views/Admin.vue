@@ -1,30 +1,33 @@
 <template>
   <div>
     <navbar></navbar>
-
     <div class="container-fluid">
       <div class="row">
-        <sidebar></sidebar> 
+        <sidebar></sidebar>
         <main role="main" class="col-md-10 ml-sm-auto">
           <router-view></router-view>
         </main>
-
       </div>
-    </div>   
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Navbar from '@/components/admin/navbar.vue'
-import Sidebar from '@/components/admin/sidebar.vue'
+import Navbar from '@/components/admin/Navbar.vue';
+import Sidebar from '@/components/admin/Sidebar.vue';
 
 export default {
-  name: 'Home',
-  components: {
-    Navbar,Sidebar
+  data() {
+    return {
+
+    };
   },
-}
+  components: {
+    Navbar,
+    Sidebar,
+  },
+};
 </script>
 
 <style lang="scss" scoped>

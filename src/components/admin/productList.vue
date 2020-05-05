@@ -1,17 +1,17 @@
 <template>
     <div>
-      <loading :active.sync="isLoading"></loading>      
+      <loading :active.sync="isLoading"></loading>
       <button class="btn btn-primary" @click="openModal(true)">新增商品</button>
       <table class="table mt-3">
         <thead class="bg-light">
           <tr>
             <th width="100">分類</th>
-            <th width="200">商品圖</th>  
+            <th width="200">商品圖</th>
             <th width="25%">商品名稱</th>
             <th width="65">原價</th>
-            <th width="65">售價</th>  
+            <th width="65">售價</th>
             <th width="100">狀態</th>
-            <th></th>                      
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -35,11 +35,11 @@
         </tbody>
       </table>
 
-      <pagination :pagination="pagination" @page-switch="getProducts"></pagination>  
-      
+      <pagination :pagination="pagination" @page-switch="getProducts"></pagination>
+
       <!-- 商品彈窗 -->
-      <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" >
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">
@@ -56,7 +56,6 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="">商品圖</label>
-                    <!-- <input type="file" class="form-control"> -->
                     <input type="text" class="form-control" placeholder="請輸入圖片網址" v-model="tempProduct.image">
                   </div>
                   <div class="form-group">
@@ -105,8 +104,8 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input type="number" class="form-control" v-model.number="tempProduct.price">
-                      </div>                  
-                    </div>            
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="">影片網址</label>
@@ -125,7 +124,7 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-light" data-dismiss="modal">取消返回</button>
               <button type="submit" class="btn btn-primary">儲存變更</button>
-            </div>              
+            </div>
             </form>
 
           </div>
@@ -135,8 +134,8 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Pagination from '@/components/pagination.vue';
+import $ from 'jquery';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   data() {
@@ -145,86 +144,85 @@ export default {
       pagination: {},
       tempProduct: {},
       products: [],
-      isLoading: false
-    }
+      isLoading: false,
+    };
   },
-  components:{Pagination},
+  components: { Pagination },
   methods: {
-    getProducts(page = this.pagination.current_page){
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/products?page=${page}`;
-      let vm = this;
+    getProducts(page = this.pagination.current_page) {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/products?page=${page}`;
+      const vm = this;
       this.isLoading = true;
       this.$http.get(api)
-      .then((res)=>{
-        vm.products = res.data.products;
-        vm.pagination = res.data.pagination;
-        vm.isLoading = false;
-      })
+        .then((res) => {
+          vm.products = res.data.products;
+          vm.pagination = res.data.pagination;
+          vm.isLoading = false;
+        });
     },
-    updateProduct(){
-      let vm = this;
+    updateProduct() {
+      const vm = this;
       let api = '';
       let httpMethod = '';
-      
-      if(vm.isAdd){
+
+      if (vm.isAdd) {
         api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/product`;
         httpMethod = 'post';
-      }else{
-        api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/product/${vm.tempProduct.id}`
+      } else {
+        api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/product/${vm.tempProduct.id}`;
         httpMethod = 'put';
       }
-      this.$http[httpMethod](api,{data: vm.tempProduct})
-      .then((res)=>{
-        if(res.data.success){
-          $('#productModal').modal('hide');
-          vm.getProducts();
-          vm.$bus.$emit('message:push',res.data.message,'success');
-        }else{
-          vm.$bus.$emit('message:push',res.data.message,'danger');
-        }
-      })
+      this.$http[httpMethod](api, { data: vm.tempProduct })
+        .then((res) => {
+          if (res.data.success) {
+            $('#productModal').modal('hide');
+            vm.getProducts();
+            vm.$bus.$emit('message:push', res.data.message, 'success');
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger');
+          }
+        });
     },
-    delProduct(id){
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/product/${id}`
-      let vm = this;
+    delProduct(id) {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/product/${id}`;
+      const vm = this;
       this.$http.delete(api)
-      .then((res)=>{
-        vm.getProducts();
-      })
+        .then(() => {
+          vm.getProducts();
+        });
     },
-    openModal(isAdd,item){
+    openModal(isAdd, item) {
       $('#productModal').modal('show');
-      if(isAdd){
-        this.tempProduct = {}
-      }else{
-        this.tempProduct = Object.assign({},item);
+      if (isAdd) {
+        this.tempProduct = {};
+      } else {
+        this.tempProduct = { ...item };
       }
-      this.isAdd = isAdd
+      this.isAdd = isAdd;
     },
-    uploadImage(){
-      console.log(this)
-      let uploadFile = this.$refs.files.files[0];
-      let vm = this;
-      let formData = new FormData();
+    uploadImage() {
+      const uploadFile = this.$refs.files.files[0];
+      const vm = this;
+      const formData = new FormData();
 
-      formData.append('file',uploadFile);
-      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/upload`
-      this.$http.post(api,formData,{
+      formData.append('file', uploadFile);
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/upload`;
+      this.$http.post(api, formData, {
         header: {
-          "Content-Type": "multipart/form-data" 
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       })
-      .then((res)=>{
-        if(res.data.success){
-          vm.$set(vm.tempProduct,'image',res.data.imageUrl);
-        }else{
-          vm.$bus.$emit('message:push',res.data.message,'danger');
-        }
-      })
-    }
+        .then((res) => {
+          if (res.data.success) {
+            vm.$set(vm.tempProduct, 'image', res.data.imageUrl);
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger');
+          }
+        });
+    },
   },
   created() {
-    this.getProducts(1)
+    this.getProducts(1);
   },
-}
+};
 </script>
