@@ -1,10 +1,5 @@
 # 商店展示demo
 
-## Project setup
-```
-npm install
-```
-
 ### 開發備註
 ***
 * #### vue-swiper : slide直接綁定Vue事件,在loop啟用的狀態下 複製出來的slide綁不到
