@@ -6,7 +6,7 @@
                     <img class="d-md-none" src="@/assets/images/Ikaruga.jpg">
                 </div>
             </div>
-            <div class="col-md-8 p-4">
+            <div class="col-md-8 p-5">
                 <h2 class="section-title text-primary">從叛逆走向變革：《斑鳩》的不破不立。</h2>
                 <span class="text-muted">發布於 2020-05-30</span>
                 <div class="column-text-wrapper mt-3">

@@ -11,15 +11,10 @@ $radius-sm: calc(#{$radius} * 2 / 3);
 
 @mixin bg-gradient($color: #12112e, $deg: 0deg) {
     background: $color;
-    background: -moz-linear-gradient(#{$deg}, rgba($color, .7) 15%, rgba($color, 0) 80%);
-    background: -webkit-linear-gradient(#{$deg}, rgba($color, .7) 15%, rgba($color, 0) 80%);
     background: linear-gradient(#{$deg}, rgba($color, .7) 15%, rgba($color, 0) 80%);
 }
 
 @mixin transition($second:.3s, $delay:0s) {
-    -webkit-transition: all $second $delay cubic-bezier(0.645, 0.045, 0.355, 1.000);
-    -moz-transition: all $second $delay cubic-bezier(0.645, 0.045, 0.355, 1.000);
-    -o-transition: all $second $delay cubic-bezier(0.645, 0.045, 0.355, 1.000);
     transition: all $second $delay cubic-bezier(0.645, 0.045, 0.355, 1.000);
 }
 
@@ -55,8 +50,8 @@ $radius-sm: calc(#{$radius} * 2 / 3);
 
 
 // @media query
-@mixin screen-max-xs() {
-    @media screen and (max-width: 575px) {
+@mixin screen-max-md() {
+    @media screen and (max-width: 992px) {
         @content
     };
 };

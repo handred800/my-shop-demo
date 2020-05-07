@@ -24,10 +24,13 @@
 @include screen-min-sm {
     .column-image-wrapper {
         background-image: url('./assets/images/Ikaruga-sm.jpg');
-        background-position: left center;
-        background-size: contain;
+        background-position: center;
+        background-size: cover;
         background-repeat: no-repeat;
-        background-attachment: fixed;
         height: 100%;
     }
+}
+
+.column-text-wrapper {
+    word-break: break-word;
 }

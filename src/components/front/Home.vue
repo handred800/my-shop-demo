@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-4">
+    <div class="p-md-4">
       <div class="row">
           <div class="col-md-8">
             <swiper class="index-banner mb-4 mb-md-0">
@@ -19,19 +19,21 @@
             </swiper>
           </div>
           <div class="col-md-4">
-            <div class="color-block color-block-secondary mb-4" @click="routerToSale">
-              <div class="block-content text-right">
-                <h2 class="block-title">本周折扣</h2>
-                <span class="block-subtitle">查看本周的折扣遊戲</span>
+            <div class="px-4 px-md-0">
+              <div class="color-block color-block-secondary mb-4" @click="routerToSale">
+                <div class="block-content text-right">
+                  <h2 class="block-title">本周折扣</h2>
+                  <span class="block-subtitle">查看本周的折扣遊戲</span>
+                </div>
+                <div class="block-backdrop">weekly discount</div>
               </div>
-              <div class="block-backdrop">weekly discount</div>
-            </div>
-            <div class="color-block color-block-primary" @click="copyToClipboard">
-              <div class="block-content text-left">
-                <h2 class="block-title">超級招待券</h2>
-                <span class="block-subtitle">點擊領取9折招待券</span>
+              <div class="color-block color-block-primary" @click="copyToClipboard">
+                <div class="block-content text-left">
+                  <h2 class="block-title">超級招待券</h2>
+                  <span class="block-subtitle">點擊領取9折招待券</span>
+                </div>
+                <div class="block-backdrop">awesome coupon</div>
               </div>
-              <div class="block-backdrop">awesome coupon</div>
             </div>
           </div>
       </div>

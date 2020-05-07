@@ -50,6 +50,11 @@
             transform: translateY(0);
         }
     }
+
+    @include screen-max-sm {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 }
 
 .product-carousel {
@@ -94,7 +99,9 @@
     font-size: 1.5rem;
     padding: .4rem 1.4rem;
     box-shadow: $shadow;
-    &::before,&::after{
+
+    &::before,
+    &::after {
         content: '';
     }
 }

@@ -162,6 +162,7 @@ export default {
         });
     },
     filterProducts() {
+      $('#search').collapse('hide');
       const vm = this;
       const filterData = vm.filter;
       vm.filteredProducts = vm.products;

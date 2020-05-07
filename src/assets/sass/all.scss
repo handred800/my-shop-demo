@@ -1,0 +1,18 @@
+@import "~bootstrap/scss/_functions";
+@import "./helpers/_variables";
+@import "~bootstrap/scss/bootstrap";
+
+// custom scss
+@import "./helpers/_mixin";
+
+@import "./components/_navbar";
+@import "./components/_layout";
+
+@import "./components/_columnPage";
+@import "./components/_order";
+
+@import "./components/_swiperExtend";
+@import "./components/_products";
+@import "./components/_colorBlock";
+@import "./components/_fixedBar";
+@import "./components/_alert.scss";
