@@ -7,7 +7,7 @@
     </div>
     <loading :active.sync="isLoading" :is-full-page="false"></loading>
     <div v-if="!orderData.is_paid">
-      <div class="row" v-if="orderData.total">
+      <div class="row flex-column-reverse flex-md-row" v-if="orderData.total">
         <!-- 資料表單 -->
         <div class="col-md-7">
           <h2 class="section-title">訂單資訊</h2>

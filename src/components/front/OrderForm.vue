@@ -5,7 +5,7 @@
           <div class="form-wizard-step active">2.填寫訂單資訊</div>
           <div class="form-wizard-step">3.完成購買</div>
       </div>
-      <div class="row" :class="{'is-loading': isLoading}">
+      <div class="row flex-column-reverse flex-md-row" :class="{'is-loading': isLoading}">
         <!-- 資料表單 -->
         <loading :active.sync="isLoading" :is-full-page="false"></loading>
         <div class="col-md-7">

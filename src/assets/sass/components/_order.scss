@@ -39,3 +39,12 @@
         }
     }
 }
+
+@include screen-max-md{
+    .table th{
+        display: none;
+    }
+    .table td{
+        display: block;
+    }
+}
