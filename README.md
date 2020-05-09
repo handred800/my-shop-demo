@@ -29,3 +29,22 @@ bindSlideClick(){
 }
 </script>
 ```
+* #### 用sessionStorage實作暫存購物車 : 分為TempCart(本地暫存),serverCart(server端)以下為設計流程
+確認購物車,或是其他頁面 =(確認結帳之後將tempCart送至server)=> 填寫訂單資訊 =(完成結帳要清空tempCart || 中離結帳耀清空serverCart)=> 訂單完成頁(完成結帳)，或是其他頁面(中離) 
+只有*填寫訂單資訊*是用serverCart的資料, 其他頁面都是用tempCart(sessionStorage)
+*備註:axios.all用法*
+```javascript
+    //要將tempCart資料一次推向server 並等待回應才執行下一步驟 
+    
+    let api = 'api位址';
+    const allPromise = productsId.map((id) => {
+        // 遍歷組成promise陣列
+        return axios.post(api,{data: id});
+    });
+    
+    // axios.all 可以一次發送所有promise並等待全部
+    axios.all(allPromise)
+    .then((...res) => {
+        console.log(res);//回應的資料
+    });
+```

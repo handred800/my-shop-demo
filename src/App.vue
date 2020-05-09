@@ -16,6 +16,10 @@ export default {
 
     };
   },
+  updated() {
+    // 換頁時收合選單(mobile)
+    this.$bus.$emit('navbar:hide');
+  },
 };
 </script>
 

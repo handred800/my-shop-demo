@@ -1,9 +1,9 @@
 <template>
     <div class="p-4">
       <div class="form-wizard">
-          <div class="form-wizard--step">1.確認購物車</div>
-          <div class="form-wizard--step active">2.填寫訂單資訊</div>
-          <div class="form-wizard--step">3.完成購買</div>
+          <div class="form-wizard-step">1.確認購物車</div>
+          <div class="form-wizard-step active">2.填寫訂單資訊</div>
+          <div class="form-wizard-step">3.完成購買</div>
       </div>
       <div class="row" :class="{'is-loading': isLoading}">
         <!-- 資料表單 -->
@@ -84,6 +84,14 @@
                   <strong class="mr-3" :class="{'text-primary':item.coupon}">${{item.final_total | moneyFilter}}</strong>
                 </div>
               </li>
+              <li class="list-group-item">
+                <div class="input-group">
+                  <input type="text" class="form-control" v-model="coupon_code" placeholder="winter30">
+                  <div class="input-group-append">
+                      <button type="button" class="btn btn-secondary" @click="applyCoupon">使用招待券</button>
+                  </div>
+                </div>
+              </li>
               <li class="list-group-item text-right">
                 <strong>總計：${{cartData.total | moneyFilter}}</strong>
               </li>
@@ -111,6 +119,7 @@ export default {
         },
         message: '',
       },
+      coupon_code: '',
       isLoading: false,
     };
   },
@@ -122,6 +131,27 @@ export default {
       vm.$http.get(api)
         .then((res) => {
           vm.cartData = res.data.data;
+          vm.isLoading = false;
+        });
+    },
+    applyCoupon() {
+      this.isLoading = true;
+      const code = {
+        code: this.coupon_code,
+      };
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/coupon`;
+      const vm = this;
+      this.$http.post(api, {
+        data: code,
+      })
+        .then((res) => {
+          if (res.data.success) {
+            vm.$bus.$emit('message:push', res.data.message, 'success');
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger');
+          }
+          vm.coupon_code = '';
+          vm.getCart();
           vm.isLoading = false;
         });
     },
@@ -147,6 +177,23 @@ export default {
         }
       });
     },
+    clearCartFromServer(callback) {
+      this.isLoading = true;
+      const vm = this;
+      vm.$http.all(
+        vm.cartData.carts.map((item) => {
+          const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart/${item.id}`;
+          return vm.$http.delete(api);
+        }),
+      )
+        .then(() => {
+          vm.isLoading = false;
+          callback();
+        });
+    },
+  },
+  beforeRouteLeave(to, from, next) {
+    this.clearCartFromServer(next);
   },
   created() {
     this.getCart();

@@ -35,8 +35,17 @@ export default {
 
     };
   },
+  methods: {
+    collapseNav() {
+      $('#menu').collapse('hide');
+    },
+  },
   mounted() {
-    $('#menu').collapse('hide');
+    this.collapseNav();
+    const vm = this;
+    vm.$bus.$on('navbar:hide', () => {
+      vm.collapseNav();
+    });
   },
 };
 </script>

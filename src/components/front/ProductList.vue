@@ -109,10 +109,8 @@
                             <button v-if="item.is_enabled"
                             type="button"
                             class="btn btn-outline-primary"
-                            @click.stop="addToCart(item.id)"
-                            :class="{'disabled': btnLoading.includes(item.id)}">
-                                <font-awesome-icon v-if="btnLoading.includes(item.id)" icon="circle-notch" class="fa-spin"/>
-                                <font-awesome-icon v-else icon="shopping-cart"/>
+                            @click.stop="addToCart(item)">
+                                <font-awesome-icon icon="shopping-cart"/>
                             </button>
                         </div>
                     </div>
@@ -136,7 +134,6 @@ export default {
       products: [],
       filteredProducts: [],
       isLoading: false,
-      btnLoading: [],
       filter: {
         title: '',
         category: [],
@@ -187,27 +184,8 @@ export default {
         vm.filteredProducts = vm.filteredProducts.filter((item) => filterData.price > item.price);
       }
     },
-    addToCart(id, qty = 1) {
-      if (this.btnLoading.includes(id)) return;
-      const cart = {
-        product_id: id,
-        qty,
-      };
-      this.btnLoading.push(id);
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
-      const vm = this;
-      vm.$http.post(api, { data: cart })
-        .then((res) => {
-          if (res.data.success) {
-            vm.$bus.$emit('message:push', res.data.message, 'success');
-          } else {
-            vm.$bus.$emit('message:push', res.data.message, 'danger');
-          }
-          // 完成後刷新資料
-          vm.$bus.$emit('cart:updateCart');
-          const index = vm.btnLoading.indexOf(id);
-          vm.btnLoading.splice(index, 1);
-        });
+    addToCart(productData) {
+      this.$bus.$emit('cart:addToCart', productData, 1);
     },
     clickProduct(product) {
       if (product.is_enabled) {

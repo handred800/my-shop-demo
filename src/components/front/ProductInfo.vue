@@ -67,25 +67,7 @@ export default {
         });
     },
     addToCart() {
-      if (this.btnLoading) return;
-      const cart = {
-        product_id: this.product.id,
-        qty: this.qty,
-      };
-      this.btnLoading = true;
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
-      const vm = this;
-      vm.$http.post(api, { data: cart })
-        .then((res) => {
-          if (res.data.success) {
-            vm.$bus.$emit('message:push', res.data.message, 'success');
-          } else {
-            vm.$bus.$emit('message:push', res.data.message, 'danger');
-          }
-          // 完成後刷新資料
-          vm.$bus.$emit('cart:updateCart');
-          this.btnLoading = false;
-        });
+      this.$bus.$emit('cart:addToCart', this.product, this.qty);
     },
   },
   created() {

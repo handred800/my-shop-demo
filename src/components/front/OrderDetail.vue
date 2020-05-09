@@ -1,9 +1,9 @@
 <template>
   <div class="p-4" :class="{'is-loading': isLoading}">
     <div class="form-wizard">
-        <div class="form-wizard--step">1.確認購物車</div>
-        <div class="form-wizard--step">2.填寫訂單資訊</div>
-        <div class="form-wizard--step active">3.完成購買</div>
+        <div class="form-wizard-step">1.確認購物車</div>
+        <div class="form-wizard-step">2.填寫訂單資訊</div>
+        <div class="form-wizard-step active">3.完成購買</div>
     </div>
     <loading :active.sync="isLoading" :is-full-page="false"></loading>
     <div v-if="!orderData.is_paid">
@@ -77,7 +77,7 @@
           <h2 class="section-title">付款成功</h2>
           <p class="lead">開始暢玩你的遊戲吧！</p>
           <p>或是...</p>
-          <router-link to="/games" class="btn btn-lg btn-secondary">逛更多遊戲！</router-link>
+          <router-link to="/games" class="btn btn-lg btn-secondary">買更多遊戲！</router-link>
         </div>
 
       </div>
@@ -120,8 +120,13 @@ export default {
           }
         });
     },
+    clearTempCart() {
+      this.$bus.$emit('cart:updateCart');
+      sessionStorage.setItem('cart', JSON.stringify([]));
+    },
   },
   created() {
+    this.clearTempCart();
     this.orderId = this.$route.params.orderId;
     this.getOrder();
   },
