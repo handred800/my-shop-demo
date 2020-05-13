@@ -96,8 +96,8 @@ export default {
       const vm = this;
       const swiper = this.$refs.productSwiper.$swiper; // swiper 實例
       // 綁定路由切換方法
-      swiper.on('tap', function () {
-        const index = this.clickedSlide.getAttribute('data-swiper-slide-index');
+      swiper.on('tap', () => {
+        const index = swiper.clickedSlide.getAttribute('data-swiper-slide-index');
         vm.productClick(vm.allData[index].id);
       });
     },
