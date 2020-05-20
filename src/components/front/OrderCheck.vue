@@ -101,13 +101,7 @@
 export default {
   data() {
     return {
-      coupon_code: '',
       tempCart: [],
-      cartData: {
-        carts: [],
-        final_total: 0,
-        total: 0,
-      },
       isLoading: false,
     };
   },
@@ -115,16 +109,10 @@ export default {
     delFormCart(index) {
       this.tempCart.splice(index, 1);
       this.setCart();
-      // const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart/${id}`;
-      // const vm = this;
-      // this.$http.delete(api)
-      //   .then((res) => {
-      //     vm.$bus.$emit('message:push', res.data.message, 'success');
-      //     vm.getCart();
-      //   });
     },
     setCart() {
       sessionStorage.setItem('cart', JSON.stringify(this.tempCart));
+      this.$bus.$emit('cart:updateCart');
     },
     tempCartToServer() {
       const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
@@ -139,8 +127,7 @@ export default {
           return vm.$http.post(api, { data: cartItem });
         }),
       )
-        .then((...res) => {
-          console.log(res);
+        .then(() => {
           vm.$router.push('/order_form');
         });
     },
