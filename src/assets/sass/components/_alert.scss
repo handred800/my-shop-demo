@@ -1,30 +1,30 @@
 .message-toast-wrapper {
-    position: fixed;
-    top: 70px;
-    left: calc(50% - 125px);
-    z-index: 1100;
+  position: fixed;
+  top: 70px;
+  left: calc(50% - 125px);
+  z-index: 1100;
 }
 
 .message-toast {
-    padding: 1rem 1.5rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    width: 250px;
-    text-align: center;
-    background-color: #fff;
-    border-radius: $radius;
-    box-shadow: $shadow;
-    @include transition;
-    opacity: 1;
-    transform: translateY(0);
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: 250px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  @include transition;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .message-toast-enter,
 .message-toast-leave-to {
-    transform: translateY(-30%);
-    opacity: 0;
+  transform: translateY(-30%);
+  opacity: 0;
 }
 
-.message-toast .close{
-    position: absolute;
+.message-toast .close {
+  position: absolute;
 }

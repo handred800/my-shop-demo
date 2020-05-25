@@ -1,146 +1,148 @@
 //商品圖塊
 .product-wrapper {
-    @include bg-image;
-    @include transition;
-    box-shadow: $shadow;
-    overflow: hidden;
-    border-radius: $radius;
-    cursor: pointer;
-    transform: scale(1);
-    opacity: 1;
-    &.product-disabled{
-        filter: grayscale(100%);
-        opacity: .6;
-        &::before{
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(black,.3);
-        }
+  @include bg-image;
+  @include transition;
+  box-shadow: $shadow;
+  overflow: hidden;
+  border-radius: $radius;
+  cursor: pointer;
+  transform: scale(1);
+  opacity: 1;
+
+  &.product-disabled {
+    filter: grayscale(100%);
+    opacity: .6;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(black, .3);
     }
+  }
+
+  .product-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: .5em .8em;
+    color: #fff;
+    @include transition;
+    transform: translateY(0);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .product-tag {
+    padding: .15em .35em;
+    border-radius: $radius-sm;
+    background-color: $secondary-color;
+    color: #fff;
+    position: absolute;
+    right: .5rem;
+    top: .5rem;
+    font-size: 1rem;
+  }
+
+  .product-title {
+    margin: 0;
+  }
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: $shadow-arise;
 
     .product-content {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: .5em .8em;
-        color: #fff;
-        @include transition;
-        transform: translateY(0);
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
+      transform: translateY(-5%);
     }
-
-    .product-tag {
-        padding: .15em .35em;
-        border-radius: $radius-sm;
-        background-color: $secondary-color;
-        color: #fff;
-        position: absolute;
-        right: .5rem;
-        top: .5rem;
-        font-size: 1rem;
-    }
-
-    .product-title {
-        margin: 0;
-    }
-
-    &:hover {
-        transform: scale(1.02);
-        box-shadow: $shadow-arise;
-
-        .product-content {
-            transform: translateY(-5%);
-        }
-    }
+  }
 }
 
 
 // productList 產品列表
 .product-list-wrapper {
-    position: relative;
+  position: relative;
 }
 
 // productList filter的動畫
 .product-filter {
-    @include transition(.5s);
-    opacity: 1;
-    transform: scale(1) translateY(0);
+  @include transition(.5s);
+  opacity: 1;
+  transform: scale(1) translateY(0);
 }
 
 .product-filter-enter,
 .product-filter-leave-to {
-    transform: scale(.5) translateY(100px);
-    opacity: 0;
+  transform: scale(.5) translateY(100px);
+  opacity: 0;
 }
 
 .product-filter-leave-active {
-    position: absolute;
-    z-index: -1;
+  position: absolute;
+  z-index: -1;
 }
 
 
 // productInfo 產品內頁
 .product-info-wrapper {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius;
+  background-color: lighten($secondary-color, 50%);
+
+  .product-bg-video {
+    width: 100%;
     border-radius: $radius;
-    background-color: lighten($secondary-color, 50%);
+    margin-bottom: -7px;
+  }
 
-    .product-bg-video {
-        width: 100%;
-        border-radius: $radius;
-        margin-bottom: -7px;
+  .product-info-panel {
+    position: absolute;
+    width: 40%;
+    max-width: 450px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 1.5rem;
+    background-color: rgba(#fff, .85);
+    // border-radius: $radius;
+    @include transition(.7s);
+
+    .description-wrapper {
+      white-space: pre-wrap;
     }
 
+    .collapse-handler {
+      $handle-width: 12px;
+      $handle-height: 50px;
+      position: absolute;
+      top: calc(50% - #{$handle-height} / 2);
+      left: calc(#{-$handle-width} * 2);
+      background-color: rgba(#fff, .75);
+      border-radius: $radius-sm;
+      width: $handle-width;
+      height: $handle-height;
+      cursor: pointer;
+    }
+
+    &.is-watching {
+      transform: translateX(100%);
+    }
+  }
+
+  @include screen-max-sm {
     .product-info-panel {
-        position: absolute;
-        width: 40%;
-        max-width: 450px;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        padding: 1.5rem;
-        background-color: rgba(#fff, .85);
-        // border-radius: $radius;
-        @include transition(.7s);
-
-        .description-wrapper {
-            white-space: pre-wrap;
-        }
-
-        .collapse-handler {
-            $handle-width: 12px;
-            $handle-height: 50px;
-            position: absolute;
-            top: calc(50% - #{$handle-height} / 2);
-            left: calc(#{-$handle-width} * 2);
-            background-color: rgba(#fff, .75);
-            border-radius: $radius-sm;
-            width: $handle-width;
-            height: $handle-height;
-            cursor: pointer;
-        }
-
-        &.is-watching {
-            transform: translateX(100%);
-        }
+      position: relative;
+      width: auto;
+      margin: auto;
+      background-color: transparent;
+      // backdrop-filter: unset;
     }
-
-    @include screen-max-sm {
-        .product-info-panel {
-            position: relative;
-            width: auto;
-            margin: auto;
-            background-color: transparent;
-            // backdrop-filter: unset;
-        }
-    }
+  }
 }

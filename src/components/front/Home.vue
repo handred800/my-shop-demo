@@ -2,56 +2,64 @@
   <div>
     <div class="p-md-4">
       <div class="row">
-          <div class="col-md-8">
-            <swiper class="index-banner mb-4 mb-md-0">
-                <swiper-slide v-for="banner in banners" :key="banner.title">
-                  <a :href="banner.url"
-                  target="_blank"
-                  class="index-banner-item"
-                  :style="`backgroundImage:url(${banner.image})`">
-                    <div class="banner-text">
-                      <h3 class="banner-title">{{banner.title}}</h3>
-                      <p class="banner-description">{{banner.description}}</p>
-                    </div>
-                  </a>
-                </swiper-slide>
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper>
-          </div>
-          <div class="col-md-4">
-            <div class="px-4 px-md-0">
-              <div class="color-block color-block-secondary mb-4" @click="routerToSale">
-                <div class="block-content text-right">
-                  <h2 class="block-title">本周折扣</h2>
-                  <span class="block-subtitle">查看本周的折扣遊戲</span>
+        <div class="col-md-8">
+          <swiper class="index-banner mb-4 mb-md-0">
+            <swiper-slide v-for="banner in banners" :key="banner.title">
+              <a
+                :href="banner.url"
+                target="_blank"
+                class="index-banner-item"
+                :style="`backgroundImage:url(${banner.image})`"
+              >
+                <div class="banner-text">
+                  <h3 class="banner-title">{{banner.title}}</h3>
+                  <p class="banner-description">{{banner.description}}</p>
                 </div>
-                <div class="block-backdrop">weekly discount</div>
+              </a>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+        </div>
+        <div class="col-md-4">
+          <div class="px-4 px-md-0">
+            <div class="color-block color-block-secondary mb-4" @click="routerToSale">
+              <div class="block-content text-right">
+                <h2 class="block-title">本周折扣</h2>
+                <span class="block-subtitle">查看本周的折扣遊戲</span>
               </div>
-              <div class="color-block color-block-primary" @click="copyToClipboard">
-                <div class="block-content text-left">
-                  <h2 class="block-title">超級招待券</h2>
-                  <span class="block-subtitle">點擊領取9折招待券</span>
-                </div>
-                <div class="block-backdrop">awesome coupon</div>
+              <div class="block-backdrop">weekly discount</div>
+            </div>
+            <div class="color-block color-block-primary" @click="copyToClipboard">
+              <div class="block-content text-left">
+                <h2 class="block-title">超級招待券</h2>
+                <span class="block-subtitle">點擊領取9折招待券</span>
               </div>
+              <div class="block-backdrop">awesome coupon</div>
             </div>
           </div>
+        </div>
       </div>
     </div>
     <section class="bg-light">
       <div class="d-flex justify-content-between align-items-center">
-        <h2 class="section-title ml-4"><font-awesome-icon icon="compact-disc"/> 新品上市</h2>
+        <h2 class="section-title ml-4">
+          <font-awesome-icon icon="compact-disc" />新品上市
+        </h2>
         <router-link to="/games" class="mr-4">買起來 ></router-link>
       </div>
       <product-swiper></product-swiper>
     </section>
     <section class="special-column-section mt-4">
-      <h2 class="section-title ml-4"><font-awesome-icon icon="pen"/> 本周專欄</h2>
+      <h2 class="section-title ml-4">
+        <font-awesome-icon icon="pen" />本周專欄
+      </h2>
       <div class="special-column--content">
         <div class="special-column--text mt-3">
           <h3>從叛逆走向變革：《斑鳩》的不破不立。</h3>
-          <p>人類最偉大的精神，莫過於執著堅持理想永不放棄。<br>
-          "不留遺憾地繼續走下去直至盡頭。我，沒有出生，就不會死去。理想事物，沒有滿足，就絕不屈服。這樣，即使是死去，也不會後悔" ...</p>
+          <p>
+            人類最偉大的精神，莫過於執著堅持理想永不放棄。
+            <br />"不留遺憾地繼續走下去直至盡頭。我，沒有出生，就不會死去。理想事物，沒有滿足，就絕不屈服。這樣，即使是死去，也不會後悔" ...
+          </p>
           <router-link to="/column" class="btn btn-outline-light">閱讀全文</router-link>
         </div>
       </div>
@@ -62,10 +70,16 @@
         <div class="form-row">
           <div class="col-lg-3 col-sm-6" v-for="item in news" :key="item.item">
             <div class="card mb-3">
-              <img :src="item.img" class="card-img-top" :alt="item.title">
+              <img :src="item.img" class="card-img-top" :alt="item.title" />
               <div class="card-body">
-                <small class="text-muted mr-3"><font-awesome-icon icon="calendar-alt"/> {{item.date}}</small>
-                <small class="text-muted"><font-awesome-icon icon="eye"/> {{item.views}}</small>
+                <small class="text-muted mr-3">
+                  <font-awesome-icon icon="calendar-alt" />
+                  {{item.date}}
+                </small>
+                <small class="text-muted">
+                  <font-awesome-icon icon="eye" />
+                  {{item.views}}
+                </small>
                 <p class="card-text text-primary">{{item.title}}</p>
               </div>
             </div>
@@ -86,16 +100,21 @@ export default {
     return {
       banners: [
         {
-          image: 'https://steamcdn-a.akamaihd.net/steam/bundles/7135/w80899u8dtlbb1x1/header_586x192.jpg',
+          image:
+            'https://steamcdn-a.akamaihd.net/steam/bundles/7135/w80899u8dtlbb1x1/header_586x192.jpg',
           url: 'https://store.steampowered.com/bundle/7135/Not_a_Metroidvania/',
           title: 'Not a Metroidvania',
-          description: "In these lovingly crafted 2D platformers, you'll explore and battle through unique non-linear worlds...",
+          description:
+            "In these lovingly crafted 2D platformers, you'll explore and battle through unique non-linear worlds...",
         },
         {
-          image: 'https://steamcdn-a.akamaihd.net/steam/bundles/983/rxdm4ez2bmiuzjii/header_586x192.jpg?t=1575947553',
-          url: 'https://store.steampowered.com/bundle/983/Supergiant_Collection/',
+          image:
+            'https://steamcdn-a.akamaihd.net/steam/bundles/983/rxdm4ez2bmiuzjii/header_586x192.jpg?t=1575947553',
+          url:
+            'https://store.steampowered.com/bundle/983/Supergiant_Collection/',
           title: 'Supergiant Collection',
-          description: 'Everyone who purchases Hades on Steam through January 2 will receive a complimentary...',
+          description:
+            'Everyone who purchases Hades on Steam through January 2 will receive a complimentary...',
         },
       ],
       news: [
@@ -145,6 +164,5 @@ export default {
       this.$router.push({ path: 'games', query: { onSale: true } });
     },
   },
-
 };
 </script>

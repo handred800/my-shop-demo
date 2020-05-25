@@ -1,12 +1,12 @@
 <template>
-      <input
-        class="form-control"
-        type="date"
-        ref="input"
-        :value="dateToYYYYMMDD(value)"
-        @input="updateValue($event.target)"
-        @focus="selectAll"
-      >
+  <input
+    class="form-control"
+    type="date"
+    ref="input"
+    :value="dateToYYYYMMDD(value)"
+    @input="updateValue($event.target)"
+    @focus="selectAll"
+  />
 </template>
 
 <script>

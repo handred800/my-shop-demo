@@ -1,9 +1,9 @@
 <template>
   <div class="p-4" :class="{'is-loading': isLoading}">
     <div class="form-wizard">
-        <div class="form-wizard-step">1.確認購物車</div>
-        <div class="form-wizard-step">2.填寫訂單資訊</div>
-        <div class="form-wizard-step active">3.完成購買</div>
+      <div class="form-wizard-step">1.確認購物車</div>
+      <div class="form-wizard-step">2.填寫訂單資訊</div>
+      <div class="form-wizard-step active">3.完成購買</div>
     </div>
     <loading :active.sync="isLoading" :is-full-page="false"></loading>
     <div v-if="!orderData.is_paid">
@@ -30,7 +30,7 @@
             </li>
             <li class="list-group-item">
               <small>備註</small>
-              <p> {{orderData.message}} </p>
+              <p>{{orderData.message}}</p>
             </li>
             <li class="list-group-item">
               <small>付款狀態</small>
@@ -39,7 +39,7 @@
             </li>
             <li class="list-group-item text-right">
               <button type="button" class="btn btn-primary" @click="payOrder">
-                <font-awesome-icon icon="wallet"/> 確認付款
+                <font-awesome-icon icon="wallet" />確認付款
               </button>
             </li>
           </ul>
@@ -50,14 +50,21 @@
           <div class="sticky-top">
             <h2 class="section-title">商品明細</h2>
             <ul class="list-unstyled list-group mb-3">
-              <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in orderData.products" :key="item.id">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                v-for="item in orderData.products"
+                :key="item.id"
+              >
                 <div class="flex-shrink-1">
                   <h5 class="font-weight-bold mb-0">{{item.product.title}}</h5>
                   <div class="text-secondary" v-if="item.coupon">{{item.coupon.title}}</div>
                   <small class="text-muted">{{item.product.price | moneyFilter}} X {{item.qty}}</small>
                 </div>
                 <div class="text-nowrap">
-                  <strong class="mr-3" :class="{'text-primary':item.coupon}">${{item.final_total | moneyFilter}}</strong>
+                  <strong
+                    class="mr-3"
+                    :class="{'text-primary':item.coupon}"
+                  >${{item.final_total | moneyFilter}}</strong>
                 </div>
               </li>
               <li class="list-group-item text-right">
@@ -70,7 +77,7 @@
     </div>
     <div class="row" v-else>
       <div class="col-md-8">
-        <img src="@/assets/images/checkout.png" class="img-fluid mb-3" alt="">
+        <img src="@/assets/images/checkout.png" class="img-fluid mb-3" alt />
       </div>
       <div class="col-md-4 d-flex justify-content-center align-items-center">
         <div class="text-center pr-md-5 mr-md-5">
@@ -79,7 +86,6 @@
           <p>或是...</p>
           <router-link to="/games" class="btn btn-lg btn-secondary">買更多遊戲！</router-link>
         </div>
-
       </div>
     </div>
   </div>
@@ -99,26 +105,24 @@ export default {
       this.isLoading = true;
       const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order/${this.orderId}`;
       const vm = this;
-      this.$http.get(api)
-        .then((res) => {
-          vm.orderData = res.data.order;
-          vm.isLoading = false;
-        });
+      this.$http.get(api).then((res) => {
+        vm.orderData = res.data.order;
+        vm.isLoading = false;
+      });
     },
     payOrder() {
       this.isLoading = true;
       const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/pay/${this.orderId}`;
       const vm = this;
-      this.$http.post(api)
-        .then((res) => {
-          if (res.data.success) {
-            vm.isLoading = false;
-            vm.$bus.$emit('message:push', res.data.message, 'success');
-            vm.getOrder();
-          } else {
-            vm.$bus.$emit('message:push', res.data.message, 'danger');
-          }
-        });
+      this.$http.post(api).then((res) => {
+        if (res.data.success) {
+          vm.isLoading = false;
+          vm.$bus.$emit('message:push', res.data.message, 'success');
+          vm.getOrder();
+        } else {
+          vm.$bus.$emit('message:push', res.data.message, 'danger');
+        }
+      });
     },
     clearTempCart() {
       this.$bus.$emit('cart:updateCart');
@@ -133,7 +137,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .list-group p{
-    margin-bottom: 0;
-  }
+.list-group p {
+  margin-bottom: 0;
+}
 </style>

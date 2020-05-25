@@ -1,154 +1,154 @@
 // overwrite bootstrap
 body {
-    background-color: #dee2e6;
+  background-color: #dee2e6;
 }
 
 .container-fluid {
-    max-width: 1366px;
+  max-width: 1366px;
 }
 
 @include screen-max-xs {
-    .container-fluid {
-        padding: 0;
-    }
+  .container-fluid {
+    padding: 0;
+  }
 }
 
 section {
-    padding: 1.5rem 0;
+  padding: 1.5rem 0;
 }
 
-main{
-    margin-bottom: -50px;
+main {
+  margin-bottom: -50px;
 }
 
-.form-inline .form-check{
-    width: auto;
+.form-inline .form-check {
+  width: auto;
 }
 
 // common utilities
 .main-wrapper {
-    position: relative;
-    margin-top: -50px;
-    min-height: 60vh;
-    margin-bottom: 50px;
-    background-color: #fff;
-    border-radius: $radius;
-    box-shadow: $shadow;
-    z-index: 99;
-    overflow: hidden;
+  position: relative;
+  margin-top: -50px;
+  min-height: 60vh;
+  margin-bottom: 50px;
+  background-color: #fff;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  z-index: 99;
+  overflow: hidden;
 }
 
 // loading placeholder (全頁)
 .is-loading {
-    height: 100vh;
+  height: 100vh;
 }
 
 ::-webkit-scrollbar {
-    width: 0;
+  width: 0;
 }
 
 .scroller-wrapper {
-    overflow-y: scroll;
-    height: 100%;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .section-title {
-    position: relative;
-    font-weight: bold;
+  position: relative;
+  font-weight: bold;
 
-    svg[data-icon] {
-        width: .7em;
-    }
+  svg[data-icon] {
+    width: .7em;
+  }
 }
 
 footer {
-    padding: 3rem 0;
+  padding: 3rem 0;
 }
 
 // Home 首頁
 .grid-home-top {
-    display: grid;
-    grid-template-rows: minmax(auto, 150px);
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+  display: grid;
+  grid-template-rows: minmax(auto, 150px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
 
-    .grid-banner {
-        grid-row: 1/3;
-        grid-column: 1/3;
-    }
+  .grid-banner {
+    grid-row: 1/3;
+    grid-column: 1/3;
+  }
 }
 
 @include screen-max-sm {
-    .grid-home-top {
-        grid-template-rows: auto;
-        grid-template-columns: 100%;
+  .grid-home-top {
+    grid-template-rows: auto;
+    grid-template-columns: 100%;
 
-        .grid-banner {
-            grid-row: 1/2;
-            grid-column: 1;
-        }
+    .grid-banner {
+      grid-row: 1/2;
+      grid-column: 1;
     }
+  }
 }
 
 .special-column-section {
-    position: relative;
+  position: relative;
 
-    .special-column--content {
-        @include bg-image(0, false);
-        background-image: url('./assets/images/Ikaruga.jpg');
-        background-attachment: fixed;
+  .special-column--content {
+    @include bg-image(0, false);
+    background-image: url('./assets/images/Ikaruga.jpg');
+    background-attachment: fixed;
 
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            @include bg-gradient($primary-color, 120deg);
-        }
-
-        .special-column--text {
-            position: relative;
-            padding: 2.5rem 2rem 1.5rem;
-            width: 45%;
-            min-height: 280px;
-
-            h3 {
-                color: #fff;
-            }
-
-            p {
-                color: $gray-200;
-            }
-        }
-
-        @include screen-max-sm {
-            &::before {
-                background-color: rgba(lighten($primary-color, 10%), .5);
-            }
-
-            .special-column--text {
-                width: 100%;
-            }
-        }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      @include bg-gradient($primary-color, 120deg);
     }
+
+    .special-column--text {
+      position: relative;
+      padding: 2.5rem 2rem 1.5rem;
+      width: 45%;
+      min-height: 280px;
+
+      h3 {
+        color: #fff;
+      }
+
+      p {
+        color: $gray-200;
+      }
+    }
+
+    @include screen-max-sm {
+      &::before {
+        background-color: rgba(lighten($primary-color, 10%), .5);
+      }
+
+      .special-column--text {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .news-section {
-    position: relative;
-    background: radial-gradient($gray-400 20%, transparent 20%);
-    background-size: 10px 10px;
+  position: relative;
+  background: radial-gradient($gray-400 20%, transparent 20%);
+  background-size: 10px 10px;
 
-    .card {
-        border: 0;
-        @include transition;
-        box-shadow: $shadow;
-        transform: translateY(0);
+  .card {
+    border: 0;
+    @include transition;
+    box-shadow: $shadow;
+    transform: translateY(0);
 
-        &:hover {
-            box-shadow: $shadow-arise;
-            transform: translateY(-5px);
-        }
+    &:hover {
+      box-shadow: $shadow-arise;
+      transform: translateY(-5px);
     }
+  }
 }

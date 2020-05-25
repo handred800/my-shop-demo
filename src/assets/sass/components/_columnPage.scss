@@ -1,36 +1,36 @@
 .column-image-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: $radius;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 
-    img {
-        max-width: 100%;
-    }
+  img {
+    max-width: 100%;
+  }
 
-    &::before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        @include bg-gradient(#fff, 270deg);
-    }
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    @include bg-gradient(#fff, 270deg);
+  }
 }
 
 @include screen-min-sm {
-    .column-image-wrapper {
-        background-image: url('./assets/images/Ikaruga-sm.jpg');
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 100%;
-    }
+  .column-image-wrapper {
+    background-image: url('./assets/images/Ikaruga-sm.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+  }
 }
 
 .column-text-wrapper {
-    word-break: break-word;
+  word-break: break-word;
 }
