@@ -146,21 +146,21 @@ export default {
   },
   methods: {
     getCart() {
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
       const vm = this;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
+      vm.isLoading = true;
       vm.$http.get(api).then((res) => {
         vm.cartData = res.data.data;
         vm.isLoading = false;
       });
     },
     applyCoupon() {
-      this.isLoading = true;
+      const vm = this;
       const code = {
         code: this.coupon_code,
       };
       const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/coupon`;
-      const vm = this;
+      vm.isLoading = true;
       this.$http
         .post(api, {
           data: code,
@@ -177,8 +177,8 @@ export default {
         });
     },
     createOrder() {
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order`;
       const vm = this;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order`;
       vm.$validator.validate().then((isValid) => {
         if (isValid) {
           vm.isLoading = true;
@@ -200,8 +200,8 @@ export default {
       });
     },
     clearCartFromServer(callback) {
-      this.isLoading = true;
       const vm = this;
+      vm.isLoading = true;
       vm.$http
         .all(
           vm.cartData.carts.map((item) => {

@@ -232,13 +232,13 @@ export default {
       this.isAdd = isAdd;
     },
     uploadImage() {
-      const uploadFile = this.$refs.files.files[0];
       const vm = this;
+      const uploadFile = this.$refs.files.files[0];
       const formData = new FormData();
 
       formData.append('file', uploadFile);
       const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/upload`;
-      this.$http
+      vm.$http
         .post(api, formData, {
           header: {
             'Content-Type': 'multipart/form-data',

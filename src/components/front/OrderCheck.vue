@@ -120,8 +120,8 @@ export default {
       this.$bus.$emit('cart:updateCart');
     },
     tempCartToServer() {
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
       const vm = this;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/cart`;
 
       vm.$http
         .all(

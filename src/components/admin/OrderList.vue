@@ -131,10 +131,10 @@ export default {
   components: { Pagination },
   methods: {
     getOrders(page = this.pagination.current_page) {
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/orders?page=${page}`;
       const vm = this;
-      this.isLoading = true;
-      this.$http.get(api).then((res) => {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/orders?page=${page}`;
+      vm.isLoading = true;
+      vm.$http.get(api).then((res) => {
         vm.orders = res.data.orders;
         vm.pagination = res.data.pagination;
         vm.isLoading = false;

@@ -122,10 +122,10 @@ export default {
   components: { Pagination, DateInput },
   methods: {
     getCoupons(page = this.pagination.current_page) {
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/coupons?page=${page}`;
       const vm = this;
-      this.isLoading = true;
-      this.$http.get(api).then((res) => {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/coupons?page=${page}`;
+      vm.isLoading = true;
+      vm.$http.get(api).then((res) => {
         vm.coupons = res.data.coupons;
         vm.pagination = res.data.pagination;
         vm.isLoading = false;
@@ -143,7 +143,7 @@ export default {
         api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/coupon/${vm.tempCoupon.id}`;
         httpMethod = 'put';
       }
-      this.$http[httpMethod](api, { data: vm.tempCoupon }).then((res) => {
+      vm.$http[httpMethod](api, { data: vm.tempCoupon }).then((res) => {
         if (res.data.success) {
           $('#productModal').modal('hide');
           vm.getCoupons();
@@ -154,8 +154,8 @@ export default {
       });
     },
     delCoupon(id) {
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/coupon/${id}`;
       const vm = this;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/admin/coupon/${id}`;
       vm.$http.delete(api).then(() => {
         vm.getCoupons();
       });

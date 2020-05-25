@@ -102,19 +102,19 @@ export default {
   },
   methods: {
     getOrder() {
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order/${this.orderId}`;
       const vm = this;
-      this.$http.get(api).then((res) => {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/order/${this.orderId}`;
+      vm.isLoading = true;
+      vm.$http.get(api).then((res) => {
         vm.orderData = res.data.order;
         vm.isLoading = false;
       });
     },
     payOrder() {
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/pay/${this.orderId}`;
       const vm = this;
-      this.$http.post(api).then((res) => {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/pay/${this.orderId}`;
+      vm.isLoading = true;
+      vm.$http.post(api).then((res) => {
         if (res.data.success) {
           vm.isLoading = false;
           vm.$bus.$emit('message:push', res.data.message, 'success');

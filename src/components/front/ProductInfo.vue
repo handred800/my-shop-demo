@@ -67,11 +67,11 @@ export default {
   },
   methods: {
     getProduct() {
-      this.isWatching = false;
-      this.isLoading = true;
-      const id = this.$route.params.gameId;
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/product/${id}`;
       const vm = this;
+      const id = vm.$route.params.gameId;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/product/${id}`;
+      vm.isWatching = false;
+      vm.isLoading = true;
       vm.$http.get(api).then((res) => {
         vm.product = res.data.product;
         window.scrollTo({ top: 0, behavior: 'smooth' });

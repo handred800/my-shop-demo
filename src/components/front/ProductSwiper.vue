@@ -79,8 +79,8 @@ export default {
   },
   methods: {
     getProducts() {
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/products/all`;
       const vm = this;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_API_PATH}/products/all`;
       vm.isLoading = true;
       vm.$http.get(api).then((res) => {
         const { products } = res.data;

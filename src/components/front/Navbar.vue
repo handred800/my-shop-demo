@@ -47,8 +47,8 @@ export default {
     },
   },
   mounted() {
-    this.collapseNav();
     const vm = this;
+    vm.collapseNav();
     vm.$bus.$on('navbar:hide', () => {
       vm.collapseNav();
     });
