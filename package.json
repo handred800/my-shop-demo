@@ -16,7 +16,7 @@
     "core-js": "^3.6.4",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
-    "swiper": "^5.3.7",
+    "swiper": "^6.5.1",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
